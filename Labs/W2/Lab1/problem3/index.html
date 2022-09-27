@@ -11,16 +11,35 @@
     <h1>Notes App</h1>
     <hr>
     <form id="addNoteForm">
-        <label for="note">Note:</label><br>
+        <label for="note">Note Text:</label><br>
         <input type="text" id="note" name="note"><br>
-        <input type="submit" id="addNoteButton" value="Add Note" >
+
+        <label for="colours">Note Colour:</label><br>
+        <select name="colours" id="colour-selctor">
+        <option value="white">White</option>    
+        <option value="aqua">Aqua</option>
+        <option value="yellowgreen">Green</option>
+        <option value="pink">Pink</option>
+        <option value="yellow">Yellow</option>
+        <option value="darkgray">Grey</option>
+
+        darkgray	
+        </select><br>
+
+        <input type="submit" id="addNoteButton" value="Add Note">
     </form>
 
     <br>
+
     <div class="note-display" id="note-display">
-        <h3>My Notes</h3>
-        <hr>
+        <div id="notesHeader" hidden>
+            <h3>My Notes</h3>
+            <hr id="hr">
+        </div>
+        <p id="noNotesMessage">Notes will appear here when they are added.</p>
+        <div id="notesContainer">
         <!-- notes inserted here dynamically -->
+        </div>
     </div>
 
     <script src="noteapp.js"></script>

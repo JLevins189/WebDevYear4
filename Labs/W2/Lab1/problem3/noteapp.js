@@ -1,19 +1,26 @@
 let note_counter = 1;
 const noteDisplayArea = document.getElementById("note-display");
 const addNoteForm = document.getElementById("addNoteForm");
+const noNotesMessage = document.getElementById("noNotesMessage");
+const notesHeader = document.getElementById("notesHeader");
+const notesContainer = document.getElementById("notesContainer");
+const spaceElement = document.createElement("p");
+const nonBreakingSpace = document.createTextNode("\u00A0");
+
 
 addNoteForm.addEventListener('submit', function(ev) {
     ev.preventDefault();
-    var oData = new FormData(addNoteForm);
-    console.log(oData.get("note"));
-    addNote(oData.get("note"));
+    let formInput = new FormData(addNoteForm);
+    addNote(formInput.get("note"), formInput.get("colours"));
  });
 
-
-function addNote(noteTextString)  {
+//also implements the edit and delete listeners here
+function addNote(noteTextString, noteColour)  {
+    hideNoNotesMessage();  //display empty message until a note is added then add layout around
     //div
     let noteDivElement = document.createElement("div");
-    noteDivElement.className ="note";
+    noteDivElement.style.backgroundColor = noteColour;
+    noteDivElement.className = "note";
     noteDivElement.id ="note_" + note_counter;  //note number as id to manipulate
 
     //text
@@ -22,6 +29,7 @@ function addNote(noteTextString)  {
     noteTextElement.id = "notetext_" + note_counter;
     let noteTextNode = document.createTextNode(noteTextString);
     noteTextElement.appendChild(noteTextNode);
+    noteTextElement.appendChild(document.createElement("br"))
     noteDivElement.appendChild(noteTextElement);
 
     //edit button
@@ -31,6 +39,8 @@ function addNote(noteTextString)  {
     editButtonElement.appendChild(editButtonText);
     noteDivElement.appendChild(editButtonElement);
 
+    noteDivElement.appendChild( document.createTextNode( '\u00A0' ) );  //whitespace
+
     //delete button
     let deleteButtonElement = document.createElement("button");
     let deleteButtonText = document.createTextNode("Delete Note");
@@ -39,19 +49,51 @@ function addNote(noteTextString)  {
 
     noteDivElement.appendChild(deleteButtonElement);
 
-    noteDisplayArea.appendChild(noteDivElement);
-    note_counter++;
+    notesContainer.appendChild(noteDivElement);
     deleteButtonElement.addEventListener("click", function() {
         deleteNote(deleteButtonElement.id);
     });
 
+    //add edit listener
     editButtonElement.addEventListener("click", function() {
-        //todo
-        document.
+        if(editButtonElement.innerHTML === "Save Changes")  {
+            console.log(editButtonElement.innerHTML);
+            noteTextElement.contentEditable = false;
+            editButtonElement.innerHTML = "Edit Note";
+        }
+        else if(editButtonElement.innerHTML === "Edit Note")  {
+            console.log(editButtonElement.innerHTML);
+            noteTextElement.contentEditable = true;
+            editButtonElement.innerHTML = "Save Changes";
+        }
     });
+
+    //incriment note id on each addidtion
+    note_counter++;
 }
 
 function deleteNote(deleteButtonId)  {
     document.getElementById(deleteButtonId).parentElement.remove();
+    note_counter--;
+    if(note_counter < 2)  {
+        showNoNotesMessage();
+    }
 }
 
+function hideNoNotesMessage()  {
+    if(note_counter === 1)  {
+        // hide message
+        noNotesMessage.style.display = "none";
+        //show headers
+        notesHeader.style.display = "block";
+    }
+}
+
+function showNoNotesMessage()  {
+    if(note_counter === 1)  {
+        // hide message
+        noNotesMessage.style.display = "block";
+        //show headers
+        notesHeader.style.display = "none";
+    }
+}
