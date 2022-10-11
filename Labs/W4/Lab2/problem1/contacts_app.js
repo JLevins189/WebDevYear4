@@ -11,6 +11,7 @@ const nonBreakingSpace = document.createTextNode("\u00A0");
 addContactForm.addEventListener('submit', function(ev) {
     ev.preventDefault();
     let formInput = new FormData(addContactForm);
+    validateForm(formInput);
     //todo validate
     //todo errors
  });
@@ -99,7 +100,21 @@ function showNoNotesMessage()  {
     }
 }
 
-function validateContact()  {
+function validateForm(formInput)  {
+    const nameRegex = /^[a-zA-Z ]+$/;
+    const mobileRegex = /^[0-9]*$/;
+
+    let nameInput = formInput.get("name");
+    let mobileInput = formInput.get("mobile");
+
+    //Name validation
+    if(!nameInput.length < 20) {}
+        //show error
+        //break
+    if(!nameRegex.test(nameInput)){}
+        //show error
+        //break
+
 
 }
 
