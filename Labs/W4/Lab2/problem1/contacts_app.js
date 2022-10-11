@@ -114,12 +114,17 @@ function validateForm(formInput)  {
     if(!nameRegex.test(nameInput)){}
         //show error
         //break
+
+    //Mobile validation    
     if(!mobileRegex.test(mobileInput)){}
         //show error
         //break    
     if(!mobileInput.length === 10){}
         //show error
-        //break  
+        //break
+
+    //Email validation    
+    
 
 
 }
