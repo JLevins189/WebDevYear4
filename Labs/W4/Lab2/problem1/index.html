@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Contacts App</title>
+</head>
+<body>
+    <h1>Contacts App</h1>
+    <hr>
+    <form id="addContactForm">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" placeholder="John Appleseed" required><br>
+
+        <label for="mobile">Mobile:</label><br>
+        <input type="text" id="mobile" name="mobile" placeholder="0861234567" required><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="note" placeholder="test@example.com" required><br>
+        <input type="submit" id="addContactButton" value="Add Contact">
+    </form>
+
+    <br>
+
+    <div class="contactsTable" id="contactsTable">
+        <div id="contactsTableHeader" hidden>
+            <h3>My Contacts</h3>
+            <hr id="hr">
+        </div>
+        <p id="noContactsMessage">Contacts will appear here when they are added.</p>
+        <div id="contactsContainer">
+        <!-- contacts inserted here dynamically -->
+        </div>
+    </div>
+
+    <script src="contacts_app.js"></script>
+
+</body>
+</html>
+
