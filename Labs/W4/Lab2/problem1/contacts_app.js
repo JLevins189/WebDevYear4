@@ -114,6 +114,12 @@ function validateForm(formInput)  {
     if(!nameRegex.test(nameInput)){}
         //show error
         //break
+    if(!mobileRegex.test(mobileInput)){}
+        //show error
+        //break    
+    if(!mobileInput.length === 10){}
+        //show error
+        //break  
 
 
 }
