@@ -7,11 +7,13 @@ const contactsContainer = document.getElementById("contactsContainer");
 const spaceElement = document.createElement("p");
 const nonBreakingSpace = document.createTextNode("\u00A0");
 
+displayError("HUHUHU");
 
 addContactForm.addEventListener('submit', function(ev) {
     ev.preventDefault();
     let formInput = new FormData(addContactForm);
     validateForm(formInput);
+
     //todo validate
     //todo errors
  });
@@ -106,9 +108,12 @@ function validateForm(formInput)  {
 
     let nameInput = formInput.get("name");
     let mobileInput = formInput.get("mobile");
+    let emailInput = formInput.get("email");
 
     //Name validation
-    if(!nameInput.length < 20) {}
+    if(!nameInput.length < 20) {
+        displayError("Name should be 20 characters max")
+    }
         //show error
         //break
     if(!nameRegex.test(nameInput)){}
@@ -124,13 +129,20 @@ function validateForm(formInput)  {
         //break
 
     //Email validation    
-    
+    if(!emailInput.length < 40) {}
+    //show error
+    //break
 
 
 }
 
-function displayError()  {
-
+function displayError(errorMessage)  {
+    const errorDiv = document.getElementById("error");
+    let errorTextElement = document.createElement("p");
+    let errorTextNode = document.createTextNode(errorMessage);
+    errorTextElement.id = "errorText"  //for styling
+    errorTextElement.appendChild(errorTextNode);
+    errorDiv.appendChild(errorTextElement);
 }
 
 function removeError()  {
