@@ -4,18 +4,19 @@ const addContactForm = document.getElementById("addContactForm");
 const noContactsMessage = document.getElementById("noContactsMessage");
 const contactsTableHeader = document.getElementById("contactsTableHeader");
 const contactsContainer = document.getElementById("contactsContainer");
+const errorDiv = document.getElementById("error");
+
+const nameRegex = /^[a-zA-Z ]+$/;
+const mobileRegex = /^[0-9]*$/;
 const spaceElement = document.createElement("p");
 const nonBreakingSpace = document.createTextNode("\u00A0");
 
-displayError("HUHUHU");
 
 addContactForm.addEventListener('submit', function(ev) {
     ev.preventDefault();
+    removeError();
     let formInput = new FormData(addContactForm);
     validateForm(formInput);
-
-    //todo validate
-    //todo errors
  });
 
 //also implements the edit and delete listeners here
@@ -103,41 +104,41 @@ function showNoNotesMessage()  {
 }
 
 function validateForm(formInput)  {
-    const nameRegex = /^[a-zA-Z ]+$/;
-    const mobileRegex = /^[0-9]*$/;
-
-    let nameInput = formInput.get("name");
-    let mobileInput = formInput.get("mobile");
-    let emailInput = formInput.get("email");
+    let nameInput = formInput.get("name").trim();
+    let mobileInput = formInput.get("mobile").trim();
+    let emailInput = formInput.get("email").trim();
 
     //Name validation
-    if(!nameInput.length < 20) {
-        displayError("Name should be 20 characters max")
+    if(!(nameInput.length < 20)) {
+        displayError("Name should be 20 characters max");
+        console.log(nameInput.length);
+        return; //one error at a time
     }
-        //show error
-        //break
-    if(!nameRegex.test(nameInput)){}
-        //show error
-        //break
-
-    //Mobile validation    
-    if(!mobileRegex.test(mobileInput)){}
-        //show error
-        //break    
-    if(!mobileInput.length === 10){}
-        //show error
-        //break
-
+    if(!nameRegex.test(nameInput)){
+        displayError("Name only contain letters and spaces");
+        return; //one error at a time
+    }
+    //Mobile validation
+    if(!(mobileInput.length === 10)) {
+        displayError("Mobile should be 10 numbers long");
+        return; //one error at a time
+    }
+    if(!mobileRegex.test(mobileInput)) {
+        displayError("Mobile should only contain numbers");
+        return; //one error at a time
+    }
     //Email validation    
-    if(!emailInput.length < 40) {}
-    //show error
-    //break
-
-
+    if(!(emailInput.length < 40)) {
+        displayError("Email should be 40 characters max");
+        return; //one error at a time
+    }
+    if(!validateEmail(emailInput)) {
+        displayError("Email format incorrect");
+        return; //one error at a time
+    }
 }
 
 function displayError(errorMessage)  {
-    const errorDiv = document.getElementById("error");
     let errorTextElement = document.createElement("p");
     let errorTextNode = document.createTextNode(errorMessage);
     errorTextElement.id = "errorText"  //for styling
@@ -146,5 +147,18 @@ function displayError(errorMessage)  {
 }
 
 function removeError()  {
-    
+    let errorTextElement = document.getElementById("errorText");
+    if(errorTextElement) {  //only remove if present
+        errorTextElement.parentElement.removeChild(errorTextElement);
+    }
+}
+
+function validateEmail(email)  {
+    var lastPositionOfAt = email.lastIndexOf('@');
+    var lastPositionOfDot = email.lastIndexOf('.');
+    //Regex for email is controversial for validation due to older patterns] still being around
+    //HTMl carries out most of the validation using input type email
+    if(lastPositionOfAt < lastPositionOfDot && lastPositionOfAt > 0 && email.indexOf("@@") === -1 && (email.length - lastPositionOfAt) > 2)
+        return true;
+    return false;    
 }
