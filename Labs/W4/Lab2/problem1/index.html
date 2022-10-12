@@ -24,20 +24,23 @@
     </form>
 
     <br>
-
-    <div class="contactsTable" id="contactsTable">
-        <div id="contactsTableHeader" hidden>
+    <div id="contactsContent" hidden>
+        <div id="contactsTableHeader">
             <h3>My Contacts</h3>
             <hr id="hr">
         </div>
-        <p id="noContactsMessage">Contacts will appear here when they are added.</p>
-        <div id="contactsContainer">
-        <!-- contacts inserted here dynamically -->
-        </div>
-    </div>
+        <table id="contactsTable">
+            <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+            </tr>
+            <!-- contacts inserted here dynamically -->
+            </table>
+    </div>    
+    <p id="noContactsMessage">Contacts will appear here when they are added.</p>
 
     <script src="contacts_app.js"></script>
-
 </body>
 </html>
 
