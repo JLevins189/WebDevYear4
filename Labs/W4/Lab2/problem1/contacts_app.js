@@ -3,19 +3,50 @@ const addContactForm = document.getElementById("addContactForm");
 const noContactsMessage = document.getElementById("noContactsMessage");
 const contactsContentDiv = document.getElementById("contactsContent");
 const errorDiv = document.getElementById("error");
+const searchInput = document.getElementById("mobileSearch");
+
+const nameTableHeader = document.getElementById("nameColumn");
+const mobileTableHeader = document.getElementById("phoneColumn");
+const emailTableHeader = document.getElementById("emailColumn");
 
 const nameRegex = /^[a-zA-Z ]+$/;
 const mobileRegex = /^[0-9]*$/;
 
+let nameDirection = 1;  //1 = ascending //-1 = descending
+let mobileDirection = 1;  //1 = ascending //-1 = descending
+let emailDirection = 1;  //1 = ascending //-1 = descending
+
+hideNoContactsMessage();
+
+nameTableHeader.addEventListener('click', function(ev) {
+    sortTable(contactsTable, 0, nameDirection);
+    toggleNameDirection();
+ });
+
+ mobileTableHeader.addEventListener('click', function(ev) {
+    sortTable(contactsTable, 1, mobileDirection);
+    toggleMobileDirection();
+ });
+
+ emailTableHeader.addEventListener('click', function(ev) {
+    sortTable(contactsTable, 2, emailDirection);
+    toggleEmailDirection();
+ });
+
+ searchInput.addEventListener('keyup', function(ev) {
+    search();
+});
 
 addContactForm.addEventListener('submit', function(ev) {
     ev.preventDefault();
     removeError();
     let formInput = new FormData(addContactForm);
-    if(validateForm(formInput))  {  //if form is valid
-        addContact(formInput);
-        hideNoContactsMessage();
-    }
+    // if(validateForm(formInput))  {  //if form is valid
+    //     addContact(formInput);
+    //     hideNoContactsMessage();
+    // }
+    addContact(formInput);
+    hideNoContactsMessage();
  });
 
 function addContact(formInput)  {
@@ -40,7 +71,7 @@ function addContact(formInput)  {
     tableRowElement.appendChild(mobileTableCellElement);
     tableRowElement.appendChild(emailTableCellElement);
     contactsTable.appendChild(tableRowElement);
-    clearForm();  //clear form input valuesafter successful add
+    // clearForm();  //clear form input values after successful add
 }
 
 function validateForm(formInput)  {
@@ -114,3 +145,62 @@ function hideNoContactsMessage()  {
     //show table and header
     contactsContentDiv.style.display = "block";
 }
+
+function sortTable(table, rowNumber, reverse) {  //stack overflow solution
+    let tb = table.tBodies[0], // use `<tbody>` to ignore `<thead>` and `<tfoot>` rows
+        tr = Array.prototype.slice.call(tb.rows, 0); // put rows into array
+    reverse = -((+reverse) || -1);
+    tr = tr.sort(function (a, b) { // sort rows
+        return reverse // `-1 *` if want opposite order
+            * (a.cells[rowNumber].textContent.trim() // using `.textContent.trim()` for test
+                .localeCompare(b.cells[rowNumber].textContent.trim())
+               );
+    });
+    for(let i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+}
+
+function toggleNameDirection()  {
+    if(nameDirection === 1)  {
+        nameDirection = -1;
+    }
+    else if(nameDirection === -1)  {
+        nameDirection = 1;
+    }
+}
+
+function toggleMobileDirection()  {
+    if(mobileDirection === 1)  {
+        mobileDirection = -1;
+    }
+    else if(mobileDirection === -1)  {
+        mobileDirection = 1;
+    }
+}
+
+function toggleEmailDirection()  {
+    if(emailDirection === 1)  {
+        emailDirection = -1;
+    }
+    else if(emailDirection === -1)  {
+        emailDirection = 1;
+    }
+}
+
+function search() {
+    let tb = contactsTable.tBodies[0];
+    let rows = tb.rows;
+
+    //iterate over rows and get mobile column and filter based off this
+    for(let i = 0; i < rows.length; i++)  {
+        let mobileNumber = rows[i].cells[1].textContent;
+        if (mobileNumber.toUpperCase().indexOf(searchInput.value.toUpperCase()) > -1) {  //i.e. number is found as substring 
+          rows[i].style.display = "";
+        } else {
+          rows[i].style.display = "none";
+        }
+    }
+}
+
+
+
+
