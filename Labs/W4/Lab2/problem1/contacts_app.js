@@ -43,12 +43,12 @@ addContactForm.addEventListener('submit', function(ev) {
     ev.preventDefault();
     removeError();
     let formInput = new FormData(addContactForm);
-    // if(validateForm(formInput))  {  //if form is valid
-    //     addContact(formInput);
-    //     hideNoContactsMessage();
-    // }
-    addContact(formInput);
-    hideNoContactsMessage();
+    if(validateForm(formInput))  {  //if form is valid
+        addContact(formInput);
+        hideNoContactsMessage();
+    }
+    // addContact(formInput);
+    // hideNoContactsMessage();
  });
 
 function addContact(formInput)  {
@@ -73,7 +73,7 @@ function addContact(formInput)  {
     tableRowElement.appendChild(mobileTableCellElement);
     tableRowElement.appendChild(emailTableCellElement);
     contactsTableBody.appendChild(tableRowElement);
-    // clearForm();  //clear form input values after successful add
+    clearForm();  //clear form input values after successful add
 }
 
 function validateForm(formInput)  {
@@ -81,10 +81,19 @@ function validateForm(formInput)  {
     let mobileInput = formInput.get("mobile").trim();
     let emailInput = formInput.get("email").trim();
 
+    //Empty Validation
+    if(nameInput.length === 0)  {
+        displayError("Name cannot be empty");
+    }
+    if(mobileInput.length === 0)  {
+        displayError("Mobile cannot be empty");
+    }
+    if(emailInput.length === 0)  {
+        displayError("Email cannot be empty");
+    }
     //Name validation
     if(!(nameInput.length < 20)) {
         displayError("Name should be 20 characters max");
-        console.log(nameInput.length);
         return false; //one error at a time
     }
     if(!nameRegex.test(nameInput)){
