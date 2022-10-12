@@ -1,106 +1,46 @@
-let contact_counter = 1;
 const contactsTable = document.getElementById("contactsTable");
 const addContactForm = document.getElementById("addContactForm");
 const noContactsMessage = document.getElementById("noContactsMessage");
-const contactsTableHeader = document.getElementById("contactsTableHeader");
-const contactsContainer = document.getElementById("contactsContainer");
+const contactsContentDiv = document.getElementById("contactsContent");
 const errorDiv = document.getElementById("error");
 
 const nameRegex = /^[a-zA-Z ]+$/;
 const mobileRegex = /^[0-9]*$/;
-const spaceElement = document.createElement("p");
-const nonBreakingSpace = document.createTextNode("\u00A0");
 
 
 addContactForm.addEventListener('submit', function(ev) {
     ev.preventDefault();
     removeError();
     let formInput = new FormData(addContactForm);
-    validateForm(formInput);
+    if(validateForm(formInput))  {  //if form is valid
+        addContact(formInput);
+        hideNoContactsMessage();
+    }
  });
 
-//also implements the edit and delete listeners here
-function addContact(noteTextString, noteColour)  {
-    hideNoContactsMessage();  //display empty message until a contact is added then add layout around
-    //div
-    let noteDivElement = document.createElement("div");
-    noteDivElement.style.backgroundColor = noteColour;
-    noteDivElement.className = "contact";
-    noteDivElement.id ="contact_" + contact_counter;  //contact number as id to manipulate
+function addContact(formInput)  {
+    let nameInput = formInput.get("name").trim();
+    let mobileInput = formInput.get("mobile").trim();
+    let emailInput = formInput.get("email").trim();
 
-    //text
-    let noteTextElement = document.createElement("p");
-    noteTextElement.className = "contacttext";
-    noteTextElement.id = "contacttext_" + contact_counter;
-    let noteTextNode = document.createTextNode(noteTextString);
-    noteTextElement.appendChild(noteTextNode);
-    noteTextElement.appendChild(document.createElement("br"))
-    noteDivElement.appendChild(noteTextElement);
+    let tableRowElement = document.createElement("tr");
+    let nameTableCellElement = document.createElement("td");
+    let mobileTableCellElement = document.createElement("td");
+    let emailTableCellElement = document.createElement("td");
 
-    //edit button
-    let editButtonElement = document.createElement("button");
-    let editButtonText = document.createTextNode("Edit Contact");
-    editButtonElement.id = "editbutton_" + contact_counter;
-    editButtonElement.appendChild(editButtonText);
-    noteDivElement.appendChild(editButtonElement);
+    let nameTableCellTextNode = document.createTextNode(nameInput);
+    let mobileTableCellTextNode = document.createTextNode(mobileInput);
+    let emailTableCellTextNode = document.createTextNode(emailInput);
 
-    noteDivElement.appendChild( document.createTextNode( '\u00A0' ) );  //whitespace
+    nameTableCellElement.appendChild(nameTableCellTextNode);
+    mobileTableCellElement.appendChild(mobileTableCellTextNode);
+    emailTableCellElement.appendChild(emailTableCellTextNode);
 
-    //delete button
-    let deleteButtonElement = document.createElement("button");
-    let deleteButtonText = document.createTextNode("Delete Contact");
-    deleteButtonElement.id = "deletebutton_" + contact_counter;
-    deleteButtonElement.appendChild(deleteButtonText);
-
-    noteDivElement.appendChild(deleteButtonElement);
-
-    notesContainer.appendChild(noteDivElement);
-    deleteButtonElement.addEventListener("click", function() {
-        deleteNote(deleteButtonElement.id);
-    });
-
-    //add edit listener
-    editButtonElement.addEventListener("click", function() {
-        if(editButtonElement.innerHTML === "Save Changes")  {
-            console.log(editButtonElement.innerHTML);
-            noteTextElement.contentEditable = false;
-            editButtonElement.innerHTML = "Edit Contact";
-        }
-        else if(editButtonElement.innerHTML === "Edit Contact")  {
-            console.log(editButtonElement.innerHTML);
-            noteTextElement.contentEditable = true;
-            editButtonElement.innerHTML = "Save Changes";
-        }
-    });
-
-    //incriment note id on each addidtion
-    contact_counter++;
-}
-
-// function deleteNote(deleteButtonId)  {
-//     document.getElementById(deleteButtonId).parentElement.remove();
-//     note_counter--;
-//     if(note_counter < 2)  {
-//         showNoNotesMessage();
-//     }
-// }
-
-function hideNoContactsMessage()  {
-    if(contact_counter >= 1)  {
-        // hide message
-        noContactsMessage.style.display = "none";
-        //show headers
-        contactsTableHeader.style.display = "block";
-    }
-}
-
-function showNoNotesMessage()  {
-    if(contact_counter < 1)  {
-        // hide message
-        noContactsMessage.style.display = "block";
-        //show headers
-        contactsTableHeader.style.display = "none";
-    }
+    tableRowElement.appendChild(nameTableCellElement);
+    tableRowElement.appendChild(mobileTableCellElement);
+    tableRowElement.appendChild(emailTableCellElement);
+    contactsTable.appendChild(tableRowElement);
+    clearForm();  //clear form input valuesafter successful add
 }
 
 function validateForm(formInput)  {
@@ -112,30 +52,31 @@ function validateForm(formInput)  {
     if(!(nameInput.length < 20)) {
         displayError("Name should be 20 characters max");
         console.log(nameInput.length);
-        return; //one error at a time
+        return false; //one error at a time
     }
     if(!nameRegex.test(nameInput)){
         displayError("Name only contain letters and spaces");
-        return; //one error at a time
+        return false; //one error at a time
     }
     //Mobile validation
     if(!(mobileInput.length === 10)) {
         displayError("Mobile should be 10 numbers long");
-        return; //one error at a time
+        return false; //one error at a time
     }
     if(!mobileRegex.test(mobileInput)) {
         displayError("Mobile should only contain numbers");
-        return; //one error at a time
+        return false; //one error at a time
     }
     //Email validation    
     if(!(emailInput.length < 40)) {
         displayError("Email should be 40 characters max");
-        return; //one error at a time
+        return false; //one error at a time
     }
     if(!validateEmail(emailInput)) {
         displayError("Email format incorrect");
-        return; //one error at a time
+        return false; //one error at a time
     }
+    return true;
 }
 
 function displayError(errorMessage)  {
@@ -161,4 +102,15 @@ function validateEmail(email)  {
     if(lastPositionOfAt < lastPositionOfDot && lastPositionOfAt > 0 && email.indexOf("@@") === -1 && (email.length - lastPositionOfAt) > 2)
         return true;
     return false;    
+}
+
+function clearForm() {
+    addContactForm.querySelectorAll("input").forEach(element => {if(!(element.type === "submit")) element.value = "";});  //clear all values except submit button
+}
+
+function hideNoContactsMessage()  {
+    // hide message
+    noContactsMessage.style.display = "none";
+    //show table and header
+    contactsContentDiv.style.display = "block";
 }
