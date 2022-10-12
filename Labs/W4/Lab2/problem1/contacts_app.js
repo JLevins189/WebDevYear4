@@ -1,9 +1,11 @@
 const contactsTable = document.getElementById("contactsTable");
+const contactsTableBody = contactsTable.tBodies[0];
 const addContactForm = document.getElementById("addContactForm");
 const noContactsMessage = document.getElementById("noContactsMessage");
 const contactsContentDiv = document.getElementById("contactsContent");
 const errorDiv = document.getElementById("error");
 const searchInput = document.getElementById("mobileSearch");
+const noResultDiv = document.getElementById("noResult");
 
 const nameTableHeader = document.getElementById("nameColumn");
 const mobileTableHeader = document.getElementById("phoneColumn");
@@ -12,9 +14,9 @@ const emailTableHeader = document.getElementById("emailColumn");
 const nameRegex = /^[a-zA-Z ]+$/;
 const mobileRegex = /^[0-9]*$/;
 
-let nameDirection = 1;  //1 = ascending //-1 = descending
-let mobileDirection = 1;  //1 = ascending //-1 = descending
-let emailDirection = 1;  //1 = ascending //-1 = descending
+let nameDirection = -1;  //-1 = ascending //1 = descending
+let mobileDirection = -1;  //-1 = ascending //1 = descending
+let emailDirection = -1;  //-1 = ascending //1 = descending
 
 hideNoContactsMessage();
 
@@ -70,7 +72,7 @@ function addContact(formInput)  {
     tableRowElement.appendChild(nameTableCellElement);
     tableRowElement.appendChild(mobileTableCellElement);
     tableRowElement.appendChild(emailTableCellElement);
-    contactsTable.appendChild(tableRowElement);
+    contactsTableBody.appendChild(tableRowElement);
     // clearForm();  //clear form input values after successful add
 }
 
@@ -187,6 +189,7 @@ function toggleEmailDirection()  {
 }
 
 function search() {
+    let resultsAmount = 0;
     let tb = contactsTable.tBodies[0];
     let rows = tb.rows;
 
@@ -195,10 +198,26 @@ function search() {
         let mobileNumber = rows[i].cells[1].textContent;
         if (mobileNumber.toUpperCase().indexOf(searchInput.value.toUpperCase()) > -1) {  //i.e. number is found as substring 
           rows[i].style.display = "";
+          resultsAmount++;
         } else {
           rows[i].style.display = "none";
         }
+        if(resultsAmount === 0)  {
+            showNoResults();
+        }
+        else  {
+            hideNoResults();
+            console.log(resultsAmount);
+        }
     }
+}
+
+function showNoResults()  {
+    noResultDiv.style.display = "block";
+}
+
+function hideNoResults()  {
+    noResultDiv.style.display = "none";
 }
 
 
