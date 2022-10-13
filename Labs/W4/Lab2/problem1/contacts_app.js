@@ -35,7 +35,7 @@ nameTableHeader.addEventListener('click', function(ev) {
  });
 
  searchInput.addEventListener('keyup', function(ev) {
-    search();
+    filterResults();
 });
 
 addContactForm.addEventListener('submit', function(ev) {
@@ -92,7 +92,7 @@ function validateForm(formInput)  {
         return false; //one error at a time
     }
     //Name validation
-    if(!(nameInput.length < 20)) {
+    if(!(nameInput.length <= 20)) {
         displayError("Name should be 20 characters max");
         return false; //one error at a time
     }
@@ -198,12 +198,12 @@ function toggleEmailDirection()  {
     }
 }
 
-function search() {
+function filterResults() {
     let resultsAmount = 0;
     let tb = contactsTable.tBodies[0];
     let rows = tb.rows;
 
-    //iterate over rows and get mobile column and filter based off this
+    //iterate over rows and get mobile column and filter based off these values
     for(let i = 0; i < rows.length; i++)  {
         let mobileNumber = rows[i].cells[1].textContent;
         if (mobileNumber.toUpperCase().indexOf(searchInput.value.toUpperCase()) > -1) {  //i.e. number is found as substring 
