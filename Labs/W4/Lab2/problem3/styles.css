@@ -1,5 +1,5 @@
 #usernameSearch  {
-    margin: 20px;
+    margin: 30px;
     height: 20px;
     justify-content: center;
     display: flex;
@@ -8,7 +8,6 @@
 
 #contentContainer  {
     justify-content: center;
-    /* background-color: rgb(145, 206, 4); */
     width: 80%;
     height: 100%;
     display: flex;
@@ -18,14 +17,12 @@
 #userProfileDiv  {
     width: 45%;
     border: 2px;
-    /* background-color: aqua; */
     margin-right: 2%;
 }
 
 #userRepoDiv  {
     width: 45%;
     border: 2px;
-    /* background-color: rgb(255, 0, 0); */
     margin-left: 2%;
 }
 
@@ -38,7 +35,6 @@ hr {
 }
 
 img {
-    margin: auto;
     display: block;
 }
 
@@ -54,5 +50,19 @@ input[type="submit"]  {
 }
 
 h3, p {
-    display: inline;
+    padding-left: 5px;
+}
+
+#avatarPictureDiv {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+#userRepoContent, #userProfileContent  {
+    height: 900px;
+}
+
+#userRepoContent  {
+    overflow: auto;
 }
