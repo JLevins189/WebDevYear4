@@ -1,0 +1,58 @@
+#usernameSearch  {
+    margin: 20px;
+    height: 20px;
+    justify-content: center;
+    display: flex;
+    margin-top:2%;
+}
+
+#contentContainer  {
+    justify-content: center;
+    /* background-color: rgb(145, 206, 4); */
+    width: 80%;
+    height: 100%;
+    display: flex;
+    margin: auto;
+}
+
+#userProfileDiv  {
+    width: 45%;
+    border: 2px;
+    /* background-color: aqua; */
+    margin-right: 2%;
+}
+
+#userRepoDiv  {
+    width: 45%;
+    border: 2px;
+    /* background-color: rgb(255, 0, 0); */
+    margin-left: 2%;
+}
+
+#userProfileContent, #userRepoContent  {
+    border: 1px solid;
+}
+
+hr {
+    color: black;
+}
+
+img {
+    margin: auto;
+    display: block;
+}
+
+input[type="search"]  {
+    margin-right: 1%;
+}
+
+input[type="submit"]  {
+    margin-left: 1%;
+    border-radius: 15%;
+    border-color: buttonborder;
+    border-width: 1px;
+}
+
+h3, p {
+    display: inline;
+}
