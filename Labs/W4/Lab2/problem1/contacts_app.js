@@ -18,8 +18,7 @@ let nameDirection = -1;  //-1 = ascending //1 = descending
 let mobileDirection = -1;  //-1 = ascending //1 = descending
 let emailDirection = -1;  //-1 = ascending //1 = descending
 
-hideNoContactsMessage();
-
+//Event Listeners
 nameTableHeader.addEventListener('click', function(ev) {
     sortTable(contactsTable, 0, nameDirection);
     toggleNameDirection();
@@ -47,8 +46,6 @@ addContactForm.addEventListener('submit', function(ev) {
         addContact(formInput);
         hideNoContactsMessage();
     }
-    // addContact(formInput);
-    // hideNoContactsMessage();
  });
 
 function addContact(formInput)  {
@@ -84,12 +81,15 @@ function validateForm(formInput)  {
     //Empty Validation
     if(nameInput.length === 0)  {
         displayError("Name cannot be empty");
+        return false; //one error at a time
     }
     if(mobileInput.length === 0)  {
         displayError("Mobile cannot be empty");
+        return false; //one error at a time
     }
     if(emailInput.length === 0)  {
         displayError("Email cannot be empty");
+        return false; //one error at a time
     }
     //Name validation
     if(!(nameInput.length < 20)) {
@@ -151,15 +151,15 @@ function clearForm() {
 }
 
 function hideNoContactsMessage()  {
-    // hide message
+    // hide rmpty contacts message
     noContactsMessage.style.display = "none";
-    //show table and header
+    //show header and table
     contactsContentDiv.style.display = "block";
 }
 
 function sortTable(table, rowNumber, reverse) {  //stack overflow solution
-    let tb = table.tBodies[0], // use `<tbody>` to ignore `<thead>` and `<tfoot>` rows
-        tr = Array.prototype.slice.call(tb.rows, 0); // put rows into array
+    let tb = table.tBodies[0];
+    let tr = Array.prototype.slice.call(tb.rows, 0); // put rows into array
     reverse = -((+reverse) || -1);
     tr = tr.sort(function (a, b) { // sort rows
         return reverse // `-1 *` if want opposite order
@@ -167,7 +167,8 @@ function sortTable(table, rowNumber, reverse) {  //stack overflow solution
                 .localeCompare(b.cells[rowNumber].textContent.trim())
                );
     });
-    for(let i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+    for(let i = 0; i < tr.length; ++i) 
+        tb.appendChild(tr[i]); // append sorted rows
 }
 
 function toggleNameDirection()  {
@@ -216,7 +217,6 @@ function search() {
         }
         else  {
             hideNoResults();
-            console.log(resultsAmount);
         }
     }
 }
