@@ -39,6 +39,7 @@ table th td  {
 
 #error {
     color: rgb(173, 42, 42);
+    text-align: center;
 }
 
 input[type=submit]  {
@@ -47,6 +48,6 @@ input[type=submit]  {
 }
 
 #contactsContent {
-    width: 60%;
+    width: 50%;
     text-align: center;
 }
