@@ -1,3 +1,4 @@
+const errorDiv = document.getElementById("error");
 const userRepoContentDiv = document.getElementById("userRepoContent");
 const usernameSearchForm = document.getElementById("usernameSearch");
 const avatarPic = document.getElementById("avatarPic");
@@ -9,10 +10,11 @@ const numberOfGists = document.getElementById("numberOfGists");
 const repoNameElementPrefix = "nameOfRepo";
 const repoDescriptionElementPrefix = "descriptionOfRepo";
 
-searchUser("JLevins189");
+searchUser("JLevins189");  //default landing to my GitHub to not have empty screen
 
 usernameSearchForm.addEventListener('submit', function(ev) {
     ev.preventDefault();
+    clearPreviousData();  //reset data fields
     let formInput = new FormData(usernameSearchForm);
     let usernameToSearch = formInput.get("usernameInput");
     searchUser(usernameToSearch)
@@ -20,29 +22,30 @@ usernameSearchForm.addEventListener('submit', function(ev) {
 
  function searchUser(username)  {
     fetch('https://api.github.com/users/' + username)
-    .then(response => response.json())
+    .then((response) => {
+        if(response.ok) {
+            return response.json()
+        }
+        throw new Error("Username Not found")
+    })
     .then(json => fillDOM(json))
     .then(json1 => getRepoData(json1.repos_url))
+    .catch(() => {
+        errorDiv.style.display = "flex";
+    });  //show error when user not found
  }
 
  function fillDOM(profileJson)  {
     avatarPic.src = profileJson.avatar_url;
-    nameOfUser.innerHTML = profileJson.name;
-    username.innerHTML = profileJson.login;  //correct case guaranteed vs input
-    email.innerHTML = profileJson.email;
-    locationOfUser.innerHTML = profileJson.location;
-    numberOfGists.innerHTML = profileJson.public_gists;
-    return profileJson;
-    // nameOfUser.innerHTML = json.name;
-    // nameOfUser.innerHTML = json.name;
-    // nameOfUser.innerHTML = json.name;
-    // nameOfUser.innerHTML = json.name;
-    // nameOfUser.innerHTML = json.name;
-    // nameOfUser.innerHTML = json.name;
+    setElement(nameOfUser, profileJson.name);
+    setElement(username, profileJson.login)  //correct case guaranteed vs input
+    setElement(email, profileJson.email);
+    setElement(locationOfUser, profileJson.location);
+    setElement(numberOfGists, profileJson.public_gists);
+    return profileJson;  //to reuse for repo data
  }
 
  function getRepoData(repoUrl) {
-    console.log(repoUrl);
     fetch(repoUrl)
     .then(response => response.json())
     .then(json => json.map(array=> ({
@@ -53,58 +56,71 @@ usernameSearchForm.addEventListener('submit', function(ev) {
  }
 
  function fillRepo(repoJson)  {
-    if(repoJson.length <= 5)  {
-        repoJson.forEach(function (currentRepo, index) {
-            let currentRepoNameElement = document.getElementById(repoNameElementPrefix + (index + 1));
-            currentRepoNameElement.innerHTML = currentRepo.name;
-            let currentRepoDescriptionElement = document.getElementById(repoDescriptionElementPrefix + (index + 1));
-            currentRepoDescriptionElement.innerHTML = currentRepo.description;
-        });
+    repoJson.forEach(function (currentRepo, index) {
+        //if there are no elements for this iteration -> make one
+        let currentRepoNameElement = document.getElementById(repoNameElementPrefix + (index + 1)) ?? document.createElement('p');
+        let currentRepoDescriptionElement = document.getElementById(repoDescriptionElementPrefix + (index + 1)) ?? document.createElement('p');
+        setElement(currentRepoNameElement, currentRepo.name)
+        setElement(currentRepoDescriptionElement ,currentRepo.description);
+
+        if(index >=5)  {
+            userRepoContentDiv.style.overflow = "auto";  //scrollable if over 5 repos
+            //Dynamically create sections into new div after 5th repo
+            let newDiv = document.createElement("div");
+            newDiv.className = "userRepo";
+            let hrElement = document.createElement("hr");  
+            let nameHeader = document.createElement("h3");
+            let descriptionHeader = document.createElement("h3");
+
+            setElement(nameHeader, "Name: ");
+            setElement(descriptionHeader, "Description: ");
+
+            //set ids for easy reset and readability on HTML
+            currentRepoNameElement.id = repoNameElementPrefix + index;
+            currentRepoDescriptionElement.id = repoDescriptionElementPrefix + index;
+
+            //append elements to scrollable div
+            newDiv.appendChild(hrElement);
+            newDiv.appendChild(nameHeader);
+            newDiv.appendChild(currentRepoNameElement);
+            newDiv.appendChild(descriptionHeader);
+            newDiv.appendChild(currentRepoDescriptionElement);
+            userRepoContentDiv.appendChild(newDiv);
+        }
+    });
+ }
+
+ function setElement(element, value)  {  //with null validation
+    if(value || value === 0)  {  //0 is marked as false otherwise
+        let errorTextNode = document.createTextNode(value);
+        element.style = "";  //red style from nulls stays after change otherwise
+        element.appendChild(errorTextNode);
     }
     else {
-        repoJson.forEach(function (currentRepo, index) {
-            if(index <5)  {
-                console.log(index);
-
-                let currentRepoNameElement = document.getElementById(repoNameElementPrefix + (index + 1));
-                currentRepoNameElement.innerHTML = currentRepo.name;
-                let currentRepoDescriptionElement = document.getElementById(repoDescriptionElementPrefix + (index + 1));
-                currentRepoDescriptionElement.innerHTML = currentRepo.description;
-            }
-            else  {
-                // <hr>
-                // <h3 id="nameOfRepoHeading3">Name: </h3><p id="nameOfRepo3">Fake Name</p><br><br>
-                // <h3 id="descriptionOfRepoHeading3">Description: </h3><p id="descriptionOfRepo3">Fake Name</p>
-
-
-                let hrElement = document.createElement("hr");
-                let nameHeader = document.createElement("h3");
-                let descriptionHeader = document.createElement("h3");
-                let nameTextElement = document.createElement("p");
-                let descriptionTextElement = document.createElement("p");
-                nameHeader.innerHTML = "Name: ";
-                descriptionHeader.innerHTML = "Description: ";
-                let nameTextNode = document.createTextNode(currentRepo.name);
-                let descriptionTextNode = document.createTextNode(currentRepo.description);
-
-                nameTextElement.appendChild(nameTextNode);
-                descriptionTextElement.appendChild(descriptionTextNode);
-                userRepoContentDiv.appendChild(hrElement);
-                userRepoContentDiv.appendChild(nameHeader);
-                userRepoContentDiv.appendChild(nameTextElement);
-                userRepoContentDiv.appendChild(descriptionHeader);
-                userRepoContentDiv.appendChild(descriptionTextElement);
-            }
-
-
-
-        });
-
+        let errorTextNode = document.createTextNode("This information could not be found or is blank");
+        element.style.color = "red";
+        element.appendChild(errorTextNode);
     }
+ }
 
+ function clearPreviousData()  {
+    errorDiv.style.display = "none";     //clear error
+    avatarPic.src = "";     //clear picture
 
+    //clear repos down to default 5
+    let userReposCollelction = document.getElementsByClassName("userRepo");
+    let userRepoNodes = Array.from(userReposCollelction);
+    let elementsToRemove = userRepoNodes.slice(5);  //any elements after 5th should be removed
+    elementsToRemove.forEach(element => element.parentElement.removeChild(element))
 
+    //clear paragraph content
+    let paragraphs = document.getElementsByTagName('p');
+    for (let element of paragraphs) {
+        element.innerHTML = "";
+    }
+    userRepoContentDiv.style.overflow = "";  //remove scroll ability of user repos
  }
 
 
- //todo null checks on attributes
+
+

@@ -10,8 +10,9 @@
 <body>
     <form id="usernameSearch">
         <input type="search" name="usernameInput" id="usernameInput" placeholder="Username">
-        <input type="submit" id="submitSearch" value="Search">
+        <input type="submit" id="submitSearch" value="Search"><br>
     </form><br>
+    <div id="error" style="color: red; display: none;" >An Error has occured fetching the data!</div>
 
     <div id="contentContainer">
 
@@ -19,40 +20,48 @@
             <h2 id="userProfileHeading">User Profile</h2>
             <div id="userProfileContent">
                 <div id="avatarPictureDiv">
-                    <img id="avatarPic" src="s.png">
+                    <img id="avatarPic" style="width: 100%; height: 100%;">
                 </div>
                 <hr>
-                <h3 id="nameOfUserHeading">Name: </h3><p id="nameOfUser">Fake Name</p>
+                <h3 id="nameOfUserHeading">Name: </h3><p id="nameOfUser"></p>
                 <hr>
-                <h3 id="usernameHeading">Username: </h3><p id="username">Fake Name</p>
+                <h3 id="usernameHeading">Username: </h3><p id="username"></p>
                 <hr>
-                <h3 id="emailOfUserHeading">Email: </h3><p id="emailOfUser">Fake Name</p>
+                <h3 id="emailOfUserHeading">Email: </h3><p id="emailOfUser"></p>
                 <hr>
-                <h3 id="locationOfUserHeading">Location: </h3><p id="locationOfUser">Fake Name</p>
+                <h3 id="locationOfUserHeading">Location: </h3><p id="locationOfUser"></p>
                 <hr>
-                <h3 id="numberOfGistsHeading">Number of Gists: </h3><p id="numberOfGists">Fake Name</p>
+                <h3 id="numberOfGistsHeading">Number of Gists: </h3><p id="numberOfGists"></p>
             </div>
         </div>
 
         <div id="userRepoDiv">
             <h2 id="userRepoHeading">User Repos</h2>
             <div id="userRepoContent">
-                <!-- <ul id="repoList"> -->
-                <h3>Name: </h3><p id="nameOfRepo1">Fake Name</p>
-                <h3 class="descriptionHeader">Description: </h3><p id="descriptionOfRepo1">Fake Name</p>
-                <hr>
-                <h3>Name: </h3><p id="nameOfRepo2">Fake Name</p>
-                <h3>Description: </h3><p id="descriptionOfRepo2">Fake Name</p>
-                <hr>
-                <h3>Name: </h3><p id="nameOfRepo3">Fake Name</p>
-                <h3>Description: </h3><p id="descriptionOfRepo3">Fake Name</p>
-                <hr>
-                <h3>Name: </h3><p id="nameOfRepo4">Fake Name</p>
-                <h3>Description: </h3><p id="descriptionOfRepo4">Fake Name</p>
-                <hr>
-                <h3>Name: </h3><p id="nameOfRepo5">Fake Name</p>
-                <h3>Description: </h3><p id="descriptionOfRepo5">Fake Name</p>
-            <!-- </ul> -->
+                <div class="userRepo">
+                    <h3>Name: </h3><p id="nameOfRepo1"></p>
+                    <h3 class="descriptionHeader">Description: </h3><p id="descriptionOfRepo1"></p>
+                    <hr>
+                </div>
+                <div class="userRepo">
+                    <h3>Name: </h3><p id="nameOfRepo2"></p>
+                    <h3>Description: </h3><p id="descriptionOfRepo2"></p>
+                    <hr>
+                </div>
+                <div class="userRepo">    
+                    <h3>Name: </h3><p id="nameOfRepo3"></p>
+                    <h3>Description: </h3><p id="descriptionOfRepo3"></p>
+                    <hr>
+                </div>
+                <div class="userRepo">
+                    <h3>Name: </h3><p id="nameOfRepo4"></p>
+                    <h3>Description: </h3><p id="descriptionOfRepo4"></p>
+                    <hr>
+                </div>
+                <div class="userRepo">    
+                <h3>Name: </h3><p id="nameOfRepo5"></p>
+                <h3>Description: </h3><p id="descriptionOfRepo5"></p>
+                </div>
             </div>
 
         </div>
