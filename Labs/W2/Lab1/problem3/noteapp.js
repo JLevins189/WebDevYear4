@@ -1,4 +1,4 @@
-let note_counter = 1;
+let note_counter = 0;
 const noteDisplayArea = document.getElementById("note-display");
 const addNoteForm = document.getElementById("addNoteForm");
 const noNotesMessage = document.getElementById("noNotesMessage");
@@ -17,6 +17,8 @@ addNoteForm.addEventListener('submit', function(ev) {
 //also implements the edit and delete listeners here
 function addNote(noteTextString, noteColour)  {
     hideNoNotesMessage();  //display empty message until a note is added then add layout around
+    note_counter++;  //incriment note id on each addidtion
+
     //div
     let noteDivElement = document.createElement("div");
     noteDivElement.style.backgroundColor = noteColour;
@@ -38,7 +40,6 @@ function addNote(noteTextString, noteColour)  {
     editButtonElement.id = "editbutton_" + note_counter;
     editButtonElement.appendChild(editButtonText);
     noteDivElement.appendChild(editButtonElement);
-
     noteDivElement.appendChild( document.createTextNode( '\u00A0' ) );  //whitespace
 
     //delete button
@@ -46,10 +47,11 @@ function addNote(noteTextString, noteColour)  {
     let deleteButtonText = document.createTextNode("Delete Note");
     deleteButtonElement.id = "deletebutton_" + note_counter;
     deleteButtonElement.appendChild(deleteButtonText);
-
     noteDivElement.appendChild(deleteButtonElement);
 
-    notesContainer.appendChild(noteDivElement);
+    notesContainer.appendChild(noteDivElement);  //append all
+
+    //add delete button listener
     deleteButtonElement.addEventListener("click", function() {
         deleteNote(deleteButtonElement.id);
     });
@@ -67,33 +69,26 @@ function addNote(noteTextString, noteColour)  {
             editButtonElement.innerHTML = "Save Changes";
         }
     });
-
-    //incriment note id on each addidtion
-    note_counter++;
 }
 
 function deleteNote(deleteButtonId)  {
     document.getElementById(deleteButtonId).parentElement.remove();
     note_counter--;
-    if(note_counter < 2)  {
+    if(note_counter < 1)  {
         showNoNotesMessage();
     }
 }
 
-function hideNoNotesMessage()  {
-    if(note_counter === 1)  {
-        // hide message
-        noNotesMessage.style.display = "none";
-        //show headers
-        notesHeader.style.display = "block";
-    }
+function hideNoNotesMessage()  {  //runs when note is added
+    // hide message
+    noNotesMessage.style.display = "none";
+    //show headers
+    notesHeader.style.display = "block";
 }
 
-function showNoNotesMessage()  {
-    if(note_counter === 1)  {
-        // hide message
-        noNotesMessage.style.display = "block";
-        //show headers
-        notesHeader.style.display = "none";
-    }
+function showNoNotesMessage()  {  //if the last note is deleted a message will appear instead
+    // show message
+    noNotesMessage.style.display = "block";
+    //hide headers
+    notesHeader.style.display = "none";
 }
