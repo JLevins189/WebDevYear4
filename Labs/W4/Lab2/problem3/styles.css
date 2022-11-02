@@ -21,19 +21,21 @@
 }
 
 #userProfileDiv  {
-    width: 45%;
-    border: 2px;
     margin-right: 2%;
 }
 
 #userRepoDiv  {
+    margin-left: 2%;
+}
+
+#userProfileDiv, #userRepoDiv  {
     width: 45%;
     border: 2px;
-    margin-left: 2%;
 }
 
 #userProfileContent, #userRepoContent  {
     border: 1px solid;
+    height: 950px;
 }
 
 hr {
@@ -63,10 +65,6 @@ h3, p {
 #avatarPictureDiv {
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
     aspect-ratio: 1;
-}
-
-#userRepoContent, #userProfileContent  {
-    height: 950px;
+    height: 40%;
 }
