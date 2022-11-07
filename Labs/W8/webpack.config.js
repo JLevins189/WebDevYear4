@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   mode: "development",
   devtool: "inline-source-map",
-  entry: "./src/index.js",
+  entry: "./src/noteapp.js",
   devServer: {
     static: path.resolve(__dirname, "src"),
     port: 8080,
