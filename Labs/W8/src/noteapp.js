@@ -8,7 +8,7 @@ const notesHeader = document.getElementById("notesHeader");
 const notesContainer = document.getElementById("notesContainer");
 const spaceElement = document.createElement("p");
 const nonBreakingSpace = document.createTextNode("\u00A0");
-
+let deleteNoteSubscription;
 // addNoteForm.addEventListener("submit", function (ev) {
 // ev.preventDefault();
 // let formInput = new FormData(addNoteForm);
@@ -53,9 +53,8 @@ function addNote(noteTextString, noteColour) {
   notesContainer.appendChild(noteDivElement); //append all
 
   //add delete button listener
-  deleteButtonElement.addEventListener("click", function () {
-    deleteNote(deleteButtonElement.id);
-  });
+  const deleteNoteObservable = fromEvent(deleteButtonElement, "click");
+  deleteNoteSubscription = deleteNoteObservable.subscribe(deleteNoteObserver);
 
   //add edit listener
   editButtonElement.addEventListener("click", function () {
@@ -95,12 +94,12 @@ function showNoNotesMessage() {
   notesHeader.style.display = "none";
 }
 
-//https://dev.to/sagar/reactive-programming-in-javascript-with-rxjs-4jom
-//draft code
-const observer = {
-  next: function (value) {
-    value.preventDefault();
-    console.log(value);
+//https://dev.to/sagar/reactive-programming-in-javascript-with-rxjs-4jom as template
+const addNoteObserver = {
+  next: function (e) {
+    e.preventDefault();
+    let formInput = new FormData(addNoteForm);
+    addNote(formInput.get("note"), formInput.get("colours"));
   },
   error: function (err) {
     console.error(err);
@@ -109,5 +108,18 @@ const observer = {
     console.log("Completed");
   },
 };
-const observable = fromEvent(addNoteForm, "submit");
-observable.subscribe(observer);
+
+const deleteNoteObserver = {
+  next: function (e) {
+    deleteNote(e.target.id);
+    deleteNoteSubscription.unsubscribe();
+  },
+  error: function (err) {
+    console.error(err);
+  },
+  complete: function () {
+    console.log("Completed");
+  },
+};
+const addNoteObservable = fromEvent(addNoteForm, "submit");
+addNoteObservable.subscribe(addNoteObserver);
