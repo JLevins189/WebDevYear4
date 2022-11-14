@@ -9,11 +9,6 @@ const notesContainer = document.getElementById("notesContainer");
 const spaceElement = document.createElement("p");
 const nonBreakingSpace = document.createTextNode("\u00A0");
 let deleteNoteSubscription;
-// addNoteForm.addEventListener("submit", function (ev) {
-// ev.preventDefault();
-// let formInput = new FormData(addNoteForm);
-// addNote(formInput.get("note"), formInput.get("colours"));
-// });
 
 //also implements the edit and delete listeners here
 function addNote(noteTextString, noteColour) {
@@ -56,14 +51,12 @@ function addNote(noteTextString, noteColour) {
   const deleteNoteObservable = fromEvent(deleteButtonElement, "click");
   deleteNoteSubscription = deleteNoteObservable.subscribe(deleteNoteObserver);
 
-  //add edit listener
-  editButtonElement.addEventListener("click", function () {
+  const editNoteObservable = fromEvent(editButtonElement, "click");
+  editNoteObservable.subscribe(() => {
     if (editButtonElement.innerHTML === "Save Changes") {
-      console.log(editButtonElement.innerHTML);
       noteTextElement.contentEditable = false;
       editButtonElement.innerHTML = "Edit Note";
     } else if (editButtonElement.innerHTML === "Edit Note") {
-      console.log(editButtonElement.innerHTML);
       noteTextElement.contentEditable = true;
       editButtonElement.innerHTML = "Save Changes";
     }
@@ -121,5 +114,6 @@ const deleteNoteObserver = {
     console.log("Completed");
   },
 };
+
 const addNoteObservable = fromEvent(addNoteForm, "submit");
 addNoteObservable.subscribe(addNoteObserver);
