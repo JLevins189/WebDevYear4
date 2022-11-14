@@ -61,7 +61,6 @@ function addNote(noteTextString, noteColour) {
 }
 
 function deleteNote(deleteButtonId) {
-  console.log(document.getElementById(deleteButtonId).parentElement);
   document.getElementById(deleteButtonId).parentElement.remove();
   note_counter--;
   if (note_counter < 1) {
@@ -102,7 +101,6 @@ const addNoteObserver = {
 
 const deleteNoteObserver = {
   next: function (e) {
-    console.log(e.target.id);
     deleteNote(e.target.id);
   },
   error: function (err) {
