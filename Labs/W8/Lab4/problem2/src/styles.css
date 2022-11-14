@@ -1,0 +1,31 @@
+.countdownDiv {
+    display: flex;
+    justify-content: center;
+    width: auto;
+    align-items: center;
+    margin-top: 2%;
+}
+.box  {
+    display: inline;
+}
+.newline {
+    margin-top: 4%;
+    text-align: center;
+}
+input[type=submit] {
+    padding: 1% 5%;
+    background-color: #008CBA;
+    color: white;
+    border-style: none;
+    border-radius: 10px;
+
+}
+input[type=text] {
+    padding: 1% 0;
+    border-style: none;
+    border-radius: 10px;
+}
+form {
+    background-color: #DEDEDEDE;
+    padding: 2%;
+}
