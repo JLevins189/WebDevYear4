@@ -112,7 +112,7 @@ const addNoteObserver = {
 const deleteNoteObserver = {
   next: function (e) {
     deleteNote(e.target.id);
-    deleteNoteSubscription.unsubscribe();
+    deleteNoteSubscription.unsubscribe(); // cleanup
   },
   error: function (err) {
     console.error(err);
