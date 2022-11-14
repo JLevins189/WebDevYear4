@@ -6,7 +6,6 @@ const addNoteForm = document.getElementById("addNoteForm");
 const noNotesMessage = document.getElementById("noNotesMessage");
 const notesHeader = document.getElementById("notesHeader");
 const notesContainer = document.getElementById("notesContainer");
-let deleteNoteSubscription;
 
 //also implements the edit and delete listeners here
 function addNote(noteTextString, noteColour) {
@@ -62,6 +61,7 @@ function addNote(noteTextString, noteColour) {
 }
 
 function deleteNote(deleteButtonId) {
+  console.log(document.getElementById(deleteButtonId).parentElement);
   document.getElementById(deleteButtonId).parentElement.remove();
   note_counter--;
   if (note_counter < 1) {
@@ -102,8 +102,8 @@ const addNoteObserver = {
 
 const deleteNoteObserver = {
   next: function (e) {
+    console.log(e.target.id);
     deleteNote(e.target.id);
-    deleteNoteSubscription.unsubscribe(); // cleanup
   },
   error: function (err) {
     console.error(err);
