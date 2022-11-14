@@ -1,3 +1,7 @@
+body{
+    font-size: 50px;
+    text-align: center;
+}
 .countdownDiv {
     display: flex;
     justify-content: center;
@@ -5,12 +9,11 @@
     align-items: center;
     margin-top: 2%;
 }
-.box  {
+.box, #countdownHeader  {
     display: inline;
 }
-.newline {
+.submitDiv {
     margin-top: 4%;
-    text-align: center;
 }
 input[type=submit] {
     padding: 10px 8%;
@@ -21,9 +24,11 @@ input[type=submit] {
     text-align: center;
 }
 input[type=text] {
-    padding: 1% 0;
+    margin-top: 5%;
+    padding: 5% 0;
     border-style: none;
     border-radius: 10px;
+    font-size: 20px;
 }
 form {
     background-color: #DEDEDEDE;
