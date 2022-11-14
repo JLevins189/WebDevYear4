@@ -13,12 +13,12 @@
     text-align: center;
 }
 input[type=submit] {
-    padding: 1% 5%;
+    padding: 10px 8%;
     background-color: #008CBA;
     color: white;
     border-style: none;
     border-radius: 10px;
-
+    text-align: center;
 }
 input[type=text] {
     padding: 1% 0;
