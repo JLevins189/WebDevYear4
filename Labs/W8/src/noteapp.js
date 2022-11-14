@@ -6,8 +6,6 @@ const addNoteForm = document.getElementById("addNoteForm");
 const noNotesMessage = document.getElementById("noNotesMessage");
 const notesHeader = document.getElementById("notesHeader");
 const notesContainer = document.getElementById("notesContainer");
-const spaceElement = document.createElement("p");
-const nonBreakingSpace = document.createTextNode("\u00A0");
 let deleteNoteSubscription;
 
 //also implements the edit and delete listeners here
