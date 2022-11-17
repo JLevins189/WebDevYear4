@@ -28,6 +28,9 @@ input[type=text] {
     border-radius: 10px;
     font-size: 35px;
 }
+input[type=text]:disabled {
+    background-color: white;
+}
 /* Buttons */
 #stopButton {
     background-color: red;
