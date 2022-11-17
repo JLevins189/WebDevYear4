@@ -135,6 +135,9 @@ countdownForm.addEventListener("submit", function (ev) {
   }
 });
 
+//todo add stop logic
+//todo move event listener to observable
+
 //Button State
 function hideAndDisableButton(buttonElement) {
   buttonElement.style.display = "none";
