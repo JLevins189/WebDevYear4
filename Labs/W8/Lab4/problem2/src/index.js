@@ -97,7 +97,6 @@ countdownForm.addEventListener("submit", function (ev) {
     hideAndDisableButton(countdownSubmitButton);
     showAndEnableSubmitButton(countdownStopButton);
     //todo if form is valid
-    //disable inputs
     //start timer
   }
 });
