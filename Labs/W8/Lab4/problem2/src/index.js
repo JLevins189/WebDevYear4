@@ -8,7 +8,6 @@ const countdownForm = document.getElementById("countdownForm");
 const countdownSubmitButton = document.getElementById("submitCountdown");
 const countdownStopButton = document.getElementById("stopButton");
 const errorDiv = document.getElementById("error");
-const countdownInputs = document.querySelectorAll("input[type=text]");
 const numberRegex = /^[0-9]*$/;
 
 function validateForm(formInput) {
@@ -113,6 +112,7 @@ function showAndEnableButton(buttonElement) {
   buttonElement.disabled = false;
 }
 function disableInputs() {
+  const countdownInputs = document.querySelectorAll("input[type=text]");
   countdownInputs.forEach((input) => {
     input.disabled = true;
   });
