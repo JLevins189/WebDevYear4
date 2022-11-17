@@ -97,16 +97,37 @@ countdownForm.addEventListener("submit", function (ev) {
   ev.preventDefault();
   let formInput = new FormData(countdownForm);
   if (validateForm(formInput)) {
-    const subscribe = intervalObject.subscribe((secondsElapsed) => {
-      console.log(secondsElapsed);
-      hoursField.value = 0;
-      minutesField.value = 0;
-      secondsField.value = 0;
-      if (hoursInput === 0 && minutesInput === 0 && secondsInput === 0) {
+    //Convert Input Fields to ints
+    const subscribe = intervalObject.subscribe(() => {
+      //Countdown end on time out... == as input is string
+      console.log(
+        hoursField.value + ":" + minutesField.value + ":" + secondsField.value
+      );
+      if (
+        parseInt(hoursField.value) === 0 &&
+        parseInt(minutesField.value) === 0 &&
+        parseInt(secondsField.value) === 0
+      ) {
         subscribe.unsubscribe();
         hideAndDisableButton(countdownStopButton);
         showAndEnableButton(countdownSubmitButton);
+        return;
       }
+      if (
+        parseInt(minutesField.value) === 0 &&
+        parseInt(secondsField.value) === 0
+      ) {
+        hoursField.value -= 1;
+        minutesField.value = 59;
+        secondsField.value = 59;
+        return;
+      }
+      if (parseInt(secondsField.value) === 0) {
+        secondsField.value = 59;
+        minutesField.value -= 1;
+        return;
+      }
+      secondsField.value -= 1;
     });
     hideAndDisableButton(countdownSubmitButton);
     showAndEnableButton(countdownStopButton);
