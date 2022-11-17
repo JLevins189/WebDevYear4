@@ -1,6 +1,9 @@
+import { interval } from "rxjs";
+
 let hoursInput;
 let minutesInput;
 let secondsInput;
+const source = interval(1000);
 const countdownForm = document.getElementById("countdownForm");
 const numberRegex = /^[0-9]*$/;
 
@@ -54,10 +57,11 @@ countdownForm.addEventListener("submit", function (ev) {
   ev.preventDefault();
   console.log(ev.target);
   let formInput = new FormData(countdownForm);
-
+  const subscribe = source.subscribe((val) => console.log(val));
   if (validateForm(formInput)) {
     //todo if form is valid
     //disable submit -> stop
+    //disable inputs
     //start timer
   }
 });
