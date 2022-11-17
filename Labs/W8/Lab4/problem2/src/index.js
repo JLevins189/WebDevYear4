@@ -95,7 +95,7 @@ countdownForm.addEventListener("submit", function (ev) {
   if (validateForm(formInput)) {
     const subscribe = source.subscribe((val) => console.log(val));
     hideAndDisableButton(countdownSubmitButton);
-    showAndEnableSubmitButton(countdownStopButton);
+    showAndEnableButton(countdownStopButton);
     //todo if form is valid
     //start timer
   }
