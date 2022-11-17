@@ -35,3 +35,6 @@ form {
     background-color: #DEDEDEDE;
     padding: 1%;
 }
+#error {
+    color:red
+}

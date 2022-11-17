@@ -5,6 +5,7 @@ let minutesInput;
 let secondsInput;
 const source = interval(1000);
 const countdownForm = document.getElementById("countdownForm");
+const errorDiv = document.getElementById("error");
 const numberRegex = /^[0-9]*$/;
 
 function validateForm(formInput) {
@@ -53,12 +54,27 @@ function validateForm(formInput) {
   return true;
 }
 
+function displayError(errorMessage) {
+  let errorTextElement = document.createElement("p");
+  let errorTextNode = document.createTextNode(errorMessage);
+  errorTextElement.id = "errorText"; //for styling
+  errorTextElement.appendChild(errorTextNode);
+  errorDiv.appendChild(errorTextElement);
+}
+
+function removeError() {
+  let errorTextElement = document.getElementById("errorText");
+  if (errorTextElement) {
+    //only remove if present
+    errorTextElement.parentElement.removeChild(errorTextElement);
+  }
+}
+
 countdownForm.addEventListener("submit", function (ev) {
   ev.preventDefault();
-  console.log(ev.target);
   let formInput = new FormData(countdownForm);
-  const subscribe = source.subscribe((val) => console.log(val));
   if (validateForm(formInput)) {
+    const subscribe = source.subscribe((val) => console.log(val));
     //todo if form is valid
     //disable submit -> stop
     //disable inputs
