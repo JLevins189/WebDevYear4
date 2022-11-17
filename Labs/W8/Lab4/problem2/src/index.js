@@ -43,11 +43,11 @@ function validateForm(formInput) {
     displayError("Minutes must be greater than 0");
     return false; //one error at a time
   }
-
   if (secondsInput < 0) {
     displayError("Seconds must be greater than 0");
     return false; //one error at a time
   }
+  return true;
 }
 
 countdownForm.addEventListener("submit", function (ev) {
@@ -57,5 +57,7 @@ countdownForm.addEventListener("submit", function (ev) {
 
   if (validateForm(formInput)) {
     //todo if form is valid
+    //disable submit -> stop
+    //start timer
   }
 });
