@@ -1,5 +1,5 @@
 body{
-    font-size: 50px;
+    font-size: 30px;
     text-align: center;
 }
 .countdownDiv {
@@ -16,7 +16,8 @@ body{
     margin-top: 4%;
 }
 input[type=submit] {
-    padding: 10px 8%;
+    margin-bottom: 2%;
+    padding: 20px 8%;
     background-color: #008CBA;
     color: white;
     border-style: none;
@@ -25,12 +26,12 @@ input[type=submit] {
 }
 input[type=text] {
     margin-top: 5%;
-    padding: 5% 0;
+    min-height: 80px;
     border-style: none;
     border-radius: 10px;
-    font-size: 20px;
+    font-size: 35px;
 }
 form {
     background-color: #DEDEDEDE;
-    padding: 2%;
+    padding: 1%;
 }
