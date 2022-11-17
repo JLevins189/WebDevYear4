@@ -9,6 +9,9 @@ const errorDiv = document.getElementById("error");
 const numberRegex = /^[0-9]*$/;
 
 function validateForm(formInput) {
+  //remove errors on resubmit
+  removeError();
+
   hoursInput = formInput.get("hours").trim();
   minutesInput = formInput.get("minutes").trim();
   secondsInput = formInput.get("seconds").trim();
@@ -49,6 +52,20 @@ function validateForm(formInput) {
   }
   if (secondsInput < 0) {
     displayError("Seconds must be greater than 0");
+    return false; //one error at a time
+  }
+
+  //Blank check
+  if (hoursInput.length < 1) {
+    displayError("Hours must not be blank");
+    return false; //one error at a time
+  }
+  if (minutesInput.length < 1) {
+    displayError("Minutes must not be blank");
+    return false; //one error at a time
+  }
+  if (secondsInput.length < 1) {
+    displayError("Seconds must not be blank");
     return false; //one error at a time
   }
   return true;
