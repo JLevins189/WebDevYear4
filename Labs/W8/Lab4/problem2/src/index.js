@@ -8,6 +8,7 @@ const countdownForm = document.getElementById("countdownForm");
 const countdownSubmitButton = document.getElementById("submitCountdown");
 const countdownStopButton = document.getElementById("stopButton");
 const errorDiv = document.getElementById("error");
+const countdownInputs = document.querySelectorAll("input[type=text]");
 const numberRegex = /^[0-9]*$/;
 
 function validateForm(formInput) {
@@ -96,6 +97,7 @@ countdownForm.addEventListener("submit", function (ev) {
     const subscribe = source.subscribe((val) => console.log(val));
     hideAndDisableButton(countdownSubmitButton);
     showAndEnableButton(countdownStopButton);
+    disableInputs();
     //todo if form is valid
     //start timer
   }
@@ -109,4 +111,9 @@ function hideAndDisableButton(buttonElement) {
 function showAndEnableButton(buttonElement) {
   buttonElement.style.display = "inline-block";
   buttonElement.disabled = false;
+}
+function disableInputs() {
+  countdownInputs.forEach((input) => {
+    input.disabled = true;
+  });
 }
