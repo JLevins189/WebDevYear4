@@ -10,6 +10,7 @@ function validateForm(formInput) {
   secondsInput = formInput.get("seconds").trim();
 
   //Validate
+  //Regex
   if (!numberRegex.test(hoursInput)) {
     displayError("Hours can only contain numbers");
     return false; //one error at a time
@@ -20,6 +21,31 @@ function validateForm(formInput) {
   }
   if (!numberRegex.test(secondsInput)) {
     displayError("Seconds can only contain numbers");
+    return false; //one error at a time
+  }
+
+  // not >= 60
+  if (minutesInput >= 60) {
+    displayError("Minutes must be less than 60");
+    return false; //one error at a time
+  }
+  if (secondsInput >= 60) {
+    displayError("Seconds must be less than 60");
+    return false; //one error at a time
+  }
+
+  // > 0
+  if (hoursInput < 0) {
+    displayError("Hours must be greater than 0");
+    return false; //one error at a time
+  }
+  if (minutesInput < 0) {
+    displayError("Minutes must be greater than 0");
+    return false; //one error at a time
+  }
+
+  if (secondsInput < 0) {
+    displayError("Seconds must be greater than 0");
     return false; //one error at a time
   }
 }
