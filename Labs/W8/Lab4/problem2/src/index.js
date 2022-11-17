@@ -3,7 +3,11 @@ import { interval } from "rxjs";
 let hoursInput;
 let minutesInput;
 let secondsInput;
-const source = interval(1000);
+
+const intervalObject = interval(1000);
+const hoursField = document.getElementById("hoursInput");
+const minutesField = document.getElementById("minutesInput");
+const secondsField = document.getElementById("secondsInput");
 const countdownForm = document.getElementById("countdownForm");
 const countdownSubmitButton = document.getElementById("submitCountdown");
 const countdownStopButton = document.getElementById("stopButton");
@@ -93,7 +97,17 @@ countdownForm.addEventListener("submit", function (ev) {
   ev.preventDefault();
   let formInput = new FormData(countdownForm);
   if (validateForm(formInput)) {
-    const subscribe = source.subscribe((val) => console.log(val));
+    const subscribe = intervalObject.subscribe((secondsElapsed) => {
+      console.log(secondsElapsed);
+      hoursField.value = 0;
+      minutesField.value = 0;
+      secondsField.value = 0;
+      if (hoursInput === 0 && minutesInput === 0 && secondsInput === 0) {
+        subscribe.unsubscribe();
+        hideAndDisableButton(countdownStopButton);
+        showAndEnableButton(countdownSubmitButton);
+      }
+    });
     hideAndDisableButton(countdownSubmitButton);
     showAndEnableButton(countdownStopButton);
     disableInputs();
