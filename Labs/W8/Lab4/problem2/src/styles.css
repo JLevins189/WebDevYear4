@@ -15,14 +15,11 @@ body{
 .submitDiv {
     margin-top: 4%;
 }
-input[type=submit] {
-    margin-bottom: 2%;
-    padding: 20px 8%;
-    background-color: #008CBA;
-    color: white;
-    border-style: none;
-    border-radius: 10px;
-    text-align: center;
+
+/* Form */
+form {
+    background-color: #DEDEDEDE;
+    padding: 1%;
 }
 input[type=text] {
     margin-top: 5%;
@@ -31,10 +28,24 @@ input[type=text] {
     border-radius: 10px;
     font-size: 35px;
 }
-form {
-    background-color: #DEDEDEDE;
-    padding: 1%;
+/* Buttons */
+#stopButton {
+    background-color: red;
+    display: none;
 }
+#submitCountdown {    
+    background-color: #008CBA;
+}
+#submitCountdown, #stopButton {
+    margin-bottom: 2%;
+    padding: 20px 8%;
+    color: white;
+    border-style: none;
+    border-radius: 10px;
+    text-align: center;
+}
+
+
 #error {
     color:red
 }

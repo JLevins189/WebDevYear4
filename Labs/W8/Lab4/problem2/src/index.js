@@ -5,6 +5,8 @@ let minutesInput;
 let secondsInput;
 const source = interval(1000);
 const countdownForm = document.getElementById("countdownForm");
+const countdownSubmitButton = document.getElementById("submitCountdown");
+const countdownStopButton = document.getElementById("stopButton");
 const errorDiv = document.getElementById("error");
 const numberRegex = /^[0-9]*$/;
 
