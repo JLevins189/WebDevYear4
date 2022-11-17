@@ -99,7 +99,7 @@ countdownForm.addEventListener("submit", function (ev) {
   if (validateForm(formInput)) {
     //Convert Input Fields to ints
     const subscribe = intervalObject.subscribe(() => {
-      //Countdown end on time out... == as input is string
+      //Countdown end on time out
       console.log(
         hoursField.value + ":" + minutesField.value + ":" + secondsField.value
       );
