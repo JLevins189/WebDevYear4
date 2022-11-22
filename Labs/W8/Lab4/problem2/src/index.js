@@ -97,6 +97,7 @@ function removeError() {
 countdownForm.addEventListener("submit", function (ev) {
   ev.preventDefault();
   let formInput = new FormData(countdownForm);
+
   if (validateForm(formInput)) {
     //Convert Input Fields to ints
     subscription = intervalObject.subscribe(() => {
@@ -138,14 +139,14 @@ countdownStopButton.addEventListener("click", function (ev) {
 function onStartTimer() {
   hideAndDisableButton(countdownSubmitButton);
   showAndEnableButton(countdownStopButton);
-  disableInputs();
+  disabledInputs(true);
 }
 
 function onStopTimer() {
-  console.log(subscription);
   subscription.unsubscribe();
   hideAndDisableButton(countdownStopButton);
   showAndEnableButton(countdownSubmitButton);
+  disabledInputs(false);
 }
 
 //Button State
@@ -157,9 +158,9 @@ function showAndEnableButton(buttonElement) {
   buttonElement.style.display = "inline-block";
   buttonElement.disabled = false;
 }
-function disableInputs() {
+function disabledInputs(boolean) {
   const countdownInputs = document.querySelectorAll("input[type=text]");
   countdownInputs.forEach((input) => {
-    input.disabled = true;
+    input.disabled = boolean;
   });
 }
