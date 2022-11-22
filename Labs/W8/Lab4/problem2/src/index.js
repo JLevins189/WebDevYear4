@@ -66,12 +66,10 @@ function validateForm(formInput) {
 
   //Blank check
   if (hoursInput.length < 1) {
-    displayError("Hours must not be blank");
-    return false; //one error at a time
+    hoursField.value = 0;
   }
   if (minutesInput.length < 1) {
-    displayError("Minutes must not be blank");
-    return false; //one error at a time
+    minutesField.value = 0;
   }
   if (secondsInput.length < 1) {
     displayError("Seconds must not be blank");
