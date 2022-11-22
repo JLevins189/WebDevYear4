@@ -17,6 +17,16 @@ const countdownInputs = document.querySelectorAll("input[type=text]");
 const errorDiv = document.getElementById("error");
 const numberRegex = /^[0-9]*$/;
 
+//Observables
+const countdownFormSubmitObservable = fromEvent(countdownForm, "submit");
+countdownFormSubmitObservable.subscribe((ev) => handleSubmit(ev));
+
+const stopButtonObservable = fromEvent(countdownStopButton, "click");
+stopButtonObservable.subscribe(() => onStopTimer());
+
+const clearButtonObservable = fromEvent(countdownClearButton, "click");
+clearButtonObservable.subscribe(() => clearInputs());
+
 function validateForm(formInput) {
   //remove errors on resubmit
   removeError();
@@ -81,34 +91,6 @@ function validateForm(formInput) {
   return true;
 }
 
-function displayError(errorMessage) {
-  let errorTextElement = document.createElement("p");
-  let errorTextNode = document.createTextNode(errorMessage);
-  errorTextElement.id = "errorText"; //for styling
-  errorTextElement.appendChild(errorTextNode);
-  errorDiv.appendChild(errorTextElement);
-}
-
-function removeError() {
-  let errorTextElement = document.getElementById("errorText");
-  if (errorTextElement) {
-    //only remove if present
-    errorTextElement.parentElement.removeChild(errorTextElement);
-  }
-}
-
-countdownForm.addEventListener("submit", function (ev) {
-  handleSubmit(ev);
-});
-
-//todo move event listeners to observable
-
-const stopButtonObservable = fromEvent(countdownStopButton, "click");
-stopButtonObservable.subscribe(() => onStopTimer());
-
-const clearButtonObservable = fromEvent(countdownClearButton, "click");
-clearButtonObservable.subscribe(() => clearInputs());
-
 function handleSubmit(ev) {
   ev.preventDefault();
   let formInput = new FormData(countdownForm);
@@ -158,6 +140,22 @@ function onStopTimer() {
   showAndEnableButton(countdownSubmitButton);
   showAndEnableButton(countdownClearButton);
   disabledInputs(false);
+}
+
+function displayError(errorMessage) {
+  let errorTextElement = document.createElement("p");
+  let errorTextNode = document.createTextNode(errorMessage);
+  errorTextElement.id = "errorText"; //for styling
+  errorTextElement.appendChild(errorTextNode);
+  errorDiv.appendChild(errorTextElement);
+}
+
+function removeError() {
+  let errorTextElement = document.getElementById("errorText");
+  if (errorTextElement) {
+    //only remove if present
+    errorTextElement.parentElement.removeChild(errorTextElement);
+  }
 }
 
 //Button State
