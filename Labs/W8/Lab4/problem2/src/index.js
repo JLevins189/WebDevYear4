@@ -98,6 +98,18 @@ function removeError() {
 }
 
 countdownForm.addEventListener("submit", function (ev) {
+  handleSubmit(ev);
+});
+
+//todo move event listeners to observable
+
+const stopButtonObservable = fromEvent(countdownStopButton, "click");
+stopButtonObservable.subscribe(() => onStopTimer());
+
+const clearButtonObservable = fromEvent(countdownClearButton, "click");
+clearButtonObservable.subscribe(() => clearInputs());
+
+function handleSubmit(ev) {
   ev.preventDefault();
   let formInput = new FormData(countdownForm);
 
@@ -131,15 +143,7 @@ countdownForm.addEventListener("submit", function (ev) {
     });
     onStartTimer();
   }
-});
-
-//todo move event listeners to observable
-
-const stopButtonObservable = fromEvent(countdownStopButton, "click");
-stopButtonObservable.subscribe(() => onStopTimer());
-
-const clearButtonObservable = fromEvent(countdownClearButton, "click");
-clearButtonObservable.subscribe(() => clearInputs());
+}
 
 function onStartTimer() {
   hideAndDisableButton(countdownSubmitButton);
