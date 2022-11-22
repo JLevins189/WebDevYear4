@@ -135,9 +135,8 @@ countdownForm.addEventListener("submit", function (ev) {
 
 //todo move event listeners to observable
 
-countdownStopButton.addEventListener("click", function (ev) {
-  onStopTimer();
-});
+const stopButtonObservable = fromEvent(countdownStopButton, "click");
+stopButtonObservable.subscribe(() => onStopTimer());
 
 const clearButtonObservable = fromEvent(countdownClearButton, "click");
 clearButtonObservable.subscribe(() => clearInputs());
