@@ -1,9 +1,9 @@
-import { interval } from "rxjs";
+import { interval, fromEvent } from "rxjs";
 
 let hoursInput;
 let minutesInput;
 let secondsInput;
-let subscription;
+let startTimerSubscription;
 
 const intervalObject = interval(1000);
 const hoursField = document.getElementById("hoursInput");
@@ -103,7 +103,7 @@ countdownForm.addEventListener("submit", function (ev) {
 
   if (validateForm(formInput)) {
     //Convert Input Fields to ints
-    subscription = intervalObject.subscribe(() => {
+    startTimerSubscription = intervalObject.subscribe(() => {
       //Countdown end on time out
       if (
         parseInt(hoursField.value) === 0 &&
@@ -139,9 +139,8 @@ countdownStopButton.addEventListener("click", function (ev) {
   onStopTimer();
 });
 
-countdownClearButton.addEventListener("click", function (ev) {
-  clearInputs();
-});
+const clearButtonObservable = fromEvent(countdownClearButton, "click");
+clearButtonObservable.subscribe(() => clearInputs());
 
 function onStartTimer() {
   hideAndDisableButton(countdownSubmitButton);
@@ -151,7 +150,7 @@ function onStartTimer() {
 }
 
 function onStopTimer() {
-  subscription.unsubscribe();
+  startTimerSubscription.unsubscribe();
   hideAndDisableButton(countdownStopButton);
   showAndEnableButton(countdownSubmitButton);
   showAndEnableButton(countdownClearButton);
