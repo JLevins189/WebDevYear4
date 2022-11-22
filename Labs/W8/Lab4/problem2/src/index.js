@@ -107,9 +107,6 @@ countdownForm.addEventListener("submit", function (ev) {
         parseInt(secondsField.value) === 0
       ) {
         onStopTimer();
-        // subscription.unsubscribe();
-        // hideAndDisableButton(countdownStopButton);
-        // showAndEnableButton(countdownSubmitButton);
         return;
       }
       if (
