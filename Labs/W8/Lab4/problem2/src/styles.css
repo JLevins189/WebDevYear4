@@ -39,7 +39,7 @@ input[type=text]:disabled {
 #clearButton {
     background-color: rgb(209, 209, 75);
 }
-#stopButton, #clearButton {
+#stopButton {
     display: none;
 }
 #submitCountdown {    
