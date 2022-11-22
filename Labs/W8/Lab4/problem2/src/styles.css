@@ -28,18 +28,25 @@ input[type=text] {
     border-radius: 10px;
     font-size: 35px;
 }
+/* disabled inputs go darker */
 input[type=text]:disabled {
     background-color: white;
 }
 /* Buttons */
 #stopButton {
     background-color: red;
+}
+#clearButton {
+    background-color: rgb(209, 209, 75);
+}
+#stopButton, #clearButton {
+    background-color: red;
     display: none;
 }
 #submitCountdown {    
     background-color: #008CBA;
 }
-#submitCountdown, #stopButton {
+#submitCountdown, #stopButton, #clearButton {
     margin-bottom: 2%;
     padding: 20px 8%;
     color: white;
@@ -47,8 +54,6 @@ input[type=text]:disabled {
     border-radius: 10px;
     text-align: center;
 }
-
-
 #error {
     color:red
 }
