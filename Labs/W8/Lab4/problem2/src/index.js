@@ -71,9 +71,13 @@ function validateForm(formInput) {
   if (minutesInput.length < 1) {
     minutesField.value = 0;
   }
-  if (secondsInput.length < 1) {
+  console.log(secondsInput.length < 1 && minutesInput <= 0 && hoursInput <= 0);
+  if (secondsInput.length < 1 && minutesInput <= 0 && hoursInput <= 0) {
     displayError("Seconds must not be blank");
     return false; //one error at a time
+  }
+  if (secondsInput.length < 1) {
+    secondsField.value = 0;
   }
   return true;
 }
