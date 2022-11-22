@@ -64,7 +64,7 @@ function validateForm(formInput) {
     return false; //one error at a time
   }
 
-  //Blank check
+  //Blank check & validation
   if (hoursInput.length < 1) {
     hoursField.value = 0;
   }
@@ -72,7 +72,7 @@ function validateForm(formInput) {
     minutesField.value = 0;
   }
   if (secondsInput.length < 1 && minutesInput <= 0 && hoursInput <= 0) {
-    displayError("Seconds must not be blank");
+    displayError("At least one input must be filled in");
     return false; //one error at a time
   }
   if (secondsInput.length < 1) {
