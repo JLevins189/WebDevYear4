@@ -3,6 +3,7 @@ import { interval } from "rxjs";
 let hoursInput;
 let minutesInput;
 let secondsInput;
+let subscription;
 
 const intervalObject = interval(1000);
 const hoursField = document.getElementById("hoursInput");
@@ -98,19 +99,17 @@ countdownForm.addEventListener("submit", function (ev) {
   let formInput = new FormData(countdownForm);
   if (validateForm(formInput)) {
     //Convert Input Fields to ints
-    const subscribe = intervalObject.subscribe(() => {
+    subscription = intervalObject.subscribe(() => {
       //Countdown end on time out
-      console.log(
-        hoursField.value + ":" + minutesField.value + ":" + secondsField.value
-      );
       if (
         parseInt(hoursField.value) === 0 &&
         parseInt(minutesField.value) === 0 &&
         parseInt(secondsField.value) === 0
       ) {
-        subscribe.unsubscribe();
-        hideAndDisableButton(countdownStopButton);
-        showAndEnableButton(countdownSubmitButton);
+        onStopTimer();
+        // subscription.unsubscribe();
+        // hideAndDisableButton(countdownStopButton);
+        // showAndEnableButton(countdownSubmitButton);
         return;
       }
       if (
@@ -129,14 +128,28 @@ countdownForm.addEventListener("submit", function (ev) {
       }
       secondsField.value -= 1;
     });
-    hideAndDisableButton(countdownSubmitButton);
-    showAndEnableButton(countdownStopButton);
-    disableInputs();
+    onStartTimer();
   }
 });
 
-//todo add stop logic
-//todo move event listener to observable
+//todo move event listeners to observable
+
+countdownStopButton.addEventListener("click", function (ev) {
+  onStopTimer();
+});
+
+function onStartTimer() {
+  hideAndDisableButton(countdownSubmitButton);
+  showAndEnableButton(countdownStopButton);
+  disableInputs();
+}
+
+function onStopTimer() {
+  console.log(subscription);
+  subscription.unsubscribe();
+  hideAndDisableButton(countdownStopButton);
+  showAndEnableButton(countdownSubmitButton);
+}
 
 //Button State
 function hideAndDisableButton(buttonElement) {
