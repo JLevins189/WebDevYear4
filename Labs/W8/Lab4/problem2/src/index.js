@@ -12,6 +12,8 @@ const secondsField = document.getElementById("secondsInput");
 const countdownForm = document.getElementById("countdownForm");
 const countdownSubmitButton = document.getElementById("submitCountdown");
 const countdownStopButton = document.getElementById("stopButton");
+const countdownClearButton = document.getElementById("clearButton");
+const countdownInputs = document.querySelectorAll("input[type=text]");
 const errorDiv = document.getElementById("error");
 const numberRegex = /^[0-9]*$/;
 
@@ -136,8 +138,13 @@ countdownStopButton.addEventListener("click", function (ev) {
   onStopTimer();
 });
 
+countdownClearButton.addEventListener("click", function (ev) {
+  clearInputs();
+});
+
 function onStartTimer() {
   hideAndDisableButton(countdownSubmitButton);
+  hideAndDisableButton(countdownClearButton);
   showAndEnableButton(countdownStopButton);
   disabledInputs(true);
 }
@@ -146,6 +153,7 @@ function onStopTimer() {
   subscription.unsubscribe();
   hideAndDisableButton(countdownStopButton);
   showAndEnableButton(countdownSubmitButton);
+  showAndEnableButton(countdownClearButton);
   disabledInputs(false);
 }
 
@@ -159,8 +167,12 @@ function showAndEnableButton(buttonElement) {
   buttonElement.disabled = false;
 }
 function disabledInputs(boolean) {
-  const countdownInputs = document.querySelectorAll("input[type=text]");
   countdownInputs.forEach((input) => {
     input.disabled = boolean;
+  });
+}
+function clearInputs() {
+  countdownInputs.forEach((input) => {
+    input.value = "";
   });
 }
