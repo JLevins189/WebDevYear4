@@ -27,6 +27,7 @@ stopButtonObservable.subscribe(() => onStopTimer());
 const clearButtonObservable = fromEvent(countdownClearButton, "click");
 clearButtonObservable.subscribe(() => clearInputs());
 
+//Form methods
 function validateForm(formInput) {
   //remove errors on resubmit
   removeError();
@@ -127,6 +128,7 @@ function handleSubmit(ev) {
   }
 }
 
+//Timer Events
 function onStartTimer() {
   hideAndDisableButton(countdownSubmitButton);
   hideAndDisableButton(countdownClearButton);
@@ -142,6 +144,7 @@ function onStopTimer() {
   disabledInputs(false);
 }
 
+//Error displays
 function displayError(errorMessage) {
   let errorTextElement = document.createElement("p");
   let errorTextNode = document.createTextNode(errorMessage);
