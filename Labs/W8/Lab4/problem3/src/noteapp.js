@@ -117,7 +117,7 @@ const noNotesMessage = document.getElementById("noNotesMessage");
 const notesHeader = document.getElementById("notesHeader");
 const notesContainer = document.getElementById("notesContainer");
 
-function addNote(noteTextString, noteColour) {
+function addRootNote(noteTextString, noteColour) {
   hideNoNotesMessage(); //display empty message until a note is added then add layout around
   note_counter++; //increment note id on each addition
   const note = new Note(note_counter, noteTextString, noteColour);
@@ -147,12 +147,12 @@ function showNoNotesMessage() {
   notesHeader.style.display = "none";
 }
 
-//https://dev.to/sagar/reactive-programming-in-javascript-with-rxjs-4jom as template
+//ADD ROOT NOTE
 const addNoteObserver = {
   next: function (e) {
     e.preventDefault();
     let formInput = new FormData(addNoteForm);
-    addNote(formInput.get("note"), formInput.get("colours"));
+    addRootNote(formInput.get("note"), formInput.get("colours"));
   },
   error: function (err) {
     console.error(err);
@@ -162,7 +162,6 @@ const addNoteObserver = {
   },
 };
 
-//ADD ROOT NOTE
 const addNoteObservable = fromEvent(addNoteForm, "submit");
 addNoteObservable.subscribe(addNoteObserver);
 customElements.define("note-el", Note);
