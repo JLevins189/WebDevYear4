@@ -14,35 +14,36 @@ class Note extends HTMLElement {
       mode: "open",
     });
 
-    let noteDivElement = document.createElement("div");
+    const noteDivElement = document.createElement("div");
     noteDivElement.style.backgroundColor = this.getAttribute("colour");
     noteDivElement.setAttribute("class", "note");
 
     //text
-    let noteTextElement = document.createElement("p");
+    const noteTextElement = document.createElement("p");
     noteTextElement.setAttribute("class", "notetext");
     noteTextElement.setAttribute("id", this.getAttribute("id"));
-    let noteTextNode = document.createTextNode(this.getAttribute("noteText"));
+    const noteTextNode = document.createTextNode(this.getAttribute("noteText"));
     noteTextElement.appendChild(noteTextNode);
     noteTextElement.appendChild(document.createElement("br"));
     noteDivElement.appendChild(noteTextElement);
     this.noteDivElement = noteDivElement;
 
     //add related note button
-    let addRelatedNoteButtonElement = document.createElement("button");
-    let addRelatedNoteButtonText = document.createTextNode("Add Related Note");
+    const addRelatedNoteButtonElement = document.createElement("button");
+    const addRelatedNoteButtonText =
+      document.createTextNode("Add Related Note");
     addRelatedNoteButtonElement.appendChild(addRelatedNoteButtonText);
     noteDivElement.appendChild(addRelatedNoteButtonElement);
     noteDivElement.appendChild(document.createTextNode("\u00A0")); //whitespace
 
     //edit button
-    let editButtonElement = document.createElement("button");
-    let editButtonText = document.createTextNode("Edit Note");
+    const editButtonElement = document.createElement("button");
+    const editButtonText = document.createTextNode("Edit Note");
     editButtonElement.appendChild(editButtonText);
     noteDivElement.appendChild(editButtonElement);
     noteDivElement.appendChild(document.createTextNode("\u00A0")); //whitespace
 
-    this.sub = new Subject();
+    this.colourChangeSub = new Subject();
 
     const changeColourButton = document.createElement("button");
     changeColourButton.setAttribute("id", this.getAttribute("id") + "_change");
@@ -51,31 +52,27 @@ class Note extends HTMLElement {
     changeColourButtonObserver.subscribe(() => {
       let newColour = new FormData(addNoteForm).get("colours");
       noteDivElement.style.background = newColour;
-      this.sub.next(newColour);
+      this.setAttribute("colour", newColour);
+      this.colourChangeSub.next(newColour);
     });
     noteDivElement.appendChild(changeColourButton);
 
     //delete button
-    let deleteButtonElement = document.createElement("button");
-    let deleteButtonText = document.createTextNode("Delete Note");
+    const deleteButtonElement = document.createElement("button");
+    const deleteButtonText = document.createTextNode("Delete Note");
     // deleteButtonElement.id = "deletebutton_" + note_counter;
     deleteButtonElement.appendChild(deleteButtonText);
     noteDivElement.appendChild(deleteButtonElement);
     shadow.appendChild(noteDivElement); //append all
     notesContainer.appendChild(shadow);
 
-    // addRelatedNoteButtonElement.setAttribute(
-    //   "id",
-    //   this.getAttribute("id") + "_button"
-    // );
-    // addRelatedNoteButtonElement.innerHTML = "Create Linked";
     const newLinked = fromEvent(addRelatedNoteButtonElement, "click");
     newLinked.subscribe(() => this.createLinked(this));
 
     // add delete button listener
-    // const deleteNoteObservable = fromEvent(deleteButtonElement, "click");
-    // this.deleteNoteSubscription =
-    //   deleteNoteObservable.subscribe(deleteNoteObserver);
+    const deleteNoteObservable = fromEvent(deleteButtonElement, "click");
+    this.deleteNoteSubscription =
+      deleteNoteObservable.subscribe(deleteNoteObserver);
 
     // const editNoteObservable = fromEvent(editButtonElement, "click");
     // this.editNoteSubscription = editNoteObservable.subscribe(() => {
@@ -89,8 +86,9 @@ class Note extends HTMLElement {
     // });
   }
   createLinked(parent) {
-    let formInput = new FormData(addNoteForm);
-    let childNote = new Note(
+    console.log(parent.getAttribute("colour"));
+    const formInput = new FormData(addNoteForm);
+    const childNote = new Note(
       note_counter,
       formInput.get("note"),
       parent.getAttribute("colour")
@@ -101,14 +99,11 @@ class Note extends HTMLElement {
   }
   link(p) {
     this.setAttribute("parent", p.id);
-    p.sub.subscribe((colour) => {
+    p.colourChangeSub.subscribe((colour) => {
       this.noteDivElement.style.background = colour;
-      this.sub.next(colour);
+      this.colourChangeSub.next(colour);
     });
   }
-  // update(noteObj) {
-  //   notesArray.push(noteObj);
-  // }
   // remove() {
   //   notesArray = notesArray.filter((note) => note !== noteObj);
   // }
@@ -156,18 +151,6 @@ const addNoteObserver = {
     e.preventDefault();
     let formInput = new FormData(addNoteForm);
     addNote(formInput.get("note"), formInput.get("colours"));
-  },
-  error: function (err) {
-    console.error(err);
-  },
-  complete: function () {
-    console.log("Completed");
-  },
-};
-
-const deleteNoteObserver = {
-  next: function (e) {
-    // deleteNote(e.target.id);
   },
   error: function (err) {
     console.error(err);
