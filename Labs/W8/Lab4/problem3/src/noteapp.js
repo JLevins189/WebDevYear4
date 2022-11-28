@@ -2,23 +2,26 @@ import { fromEvent } from "rxjs";
 
 let notesArray = [];
 class Note {
+  editNoteObservable;
+  deleteNoteObservable;
+
   constructor(id, noteText, parentId, colour) {
     this.id = id;
     this.noteText = noteText;
     this.parentId = parentId;
     this.colour = colour;
   }
-  add(noteObj) {
+  add() {
     let noteDivElement = document.createElement("div");
-    noteDivElement.style.backgroundColor = noteColour;
+    noteDivElement.style.backgroundColor = this.colour;
     noteDivElement.className = "note";
-    noteDivElement.id = "note_" + note_counter; //note number as id to manipulate
+    noteDivElement.id = "note_" + this.colour; //note number as id to manipulate
 
     //text
     let noteTextElement = document.createElement("p");
     noteTextElement.className = "notetext";
     noteTextElement.id = "notetext_" + note_counter;
-    let noteTextNode = document.createTextNode(noteTextString);
+    let noteTextNode = document.createTextNode(this.noteText);
     noteTextElement.appendChild(noteTextNode);
     noteTextElement.appendChild(document.createElement("br"));
     noteDivElement.appendChild(noteTextElement);
@@ -41,11 +44,11 @@ class Note {
     notesContainer.appendChild(noteDivElement); //append all
 
     //add delete button listener
-    const deleteNoteObservable = fromEvent(deleteButtonElement, "click");
-    deleteNoteSubscription = deleteNoteObservable.subscribe(deleteNoteObserver);
+    // const deleteNoteObservable = fromEvent(deleteButtonElement, "click");
+    // deleteNoteSubscription = deleteNoteObservable.subscribe(deleteNoteObserver);
 
-    const editNoteObservable = fromEvent(editButtonElement, "click");
-    editNoteObservable.subscribe(() => {
+    this.editNoteObservable = fromEvent(editButtonElement, "click");
+    this.editNoteObservable.subscribe(() => {
       if (editButtonElement.innerHTML === "Save Changes") {
         noteTextElement.contentEditable = false;
         editButtonElement.innerHTML = "Edit Note";
@@ -54,7 +57,7 @@ class Note {
         editButtonElement.innerHTML = "Save Changes";
       }
     });
-    notesArray.push(noteObj);
+    notesArray.push(this);
   }
   // update(noteObj) {
   //   notesArray.push(noteObj);
@@ -75,8 +78,8 @@ const notesContainer = document.getElementById("notesContainer");
 function addNote(noteTextString, noteColour) {
   hideNoNotesMessage(); //display empty message until a note is added then add layout around
   note_counter++; //increment note id on each addidtion
-  // id, noteText, parentId, colour;
   const note = new Note(note_counter, noteTextString, null, noteColour);
+  note.add();
   console.log(note);
 }
 
