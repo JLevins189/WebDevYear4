@@ -1,0 +1,25 @@
+{
+  "name": "w8-problem3",
+  "version": "1.0.0",
+  "description": "problem3 w8 lab",
+  "private": true,
+  "scripts": {
+    "build": "webpack --config=webpack.config.js",
+    "start": "webpack && webpack serve --open --mode development --env development --hot --port 3000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "rxjs": "^7.5.7"
+  },
+  "devDependencies": {
+    "@webpack-cli/serve": "^1.7.0",
+    "html-webpack-plugin": "^5.5.0",
+    "lodash": "^4.17.21",
+    "nodemon": "^2.0.20",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1"
+  }
+}

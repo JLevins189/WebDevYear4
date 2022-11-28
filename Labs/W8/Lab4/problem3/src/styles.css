@@ -1,0 +1,37 @@
+.notetext {
+    margin-top:0.75em;
+}
+
+.note  {
+    width: 20%;
+    word-wrap: break-word;
+    margin-top:1em;
+    margin-right: 1%;
+    border-style: ridge;
+    text-align: center;
+    flex-grow: 0.25;
+    text-align: center;
+}
+
+.notesContainer  {
+    width: 100%;
+}
+
+input {
+    margin-top:0.75em;
+    margin-bottom: 0.75em;
+}
+
+select {
+    margin-top:0.75em;
+    margin-bottom: 0.75em;
+}
+
+p {
+    display: inline;
+    text-overflow: clip;
+}
+
+button  {
+    margin-top:0.75em;
+}
