@@ -1,5 +1,69 @@
 import { fromEvent } from "rxjs";
 
+let notesArray = [];
+class Note {
+  constructor(id, noteText, parentId, colour) {
+    this.id = id;
+    this.noteText = noteText;
+    this.parentId = parentId;
+    this.colour = colour;
+  }
+  add(noteObj) {
+    let noteDivElement = document.createElement("div");
+    noteDivElement.style.backgroundColor = noteColour;
+    noteDivElement.className = "note";
+    noteDivElement.id = "note_" + note_counter; //note number as id to manipulate
+
+    //text
+    let noteTextElement = document.createElement("p");
+    noteTextElement.className = "notetext";
+    noteTextElement.id = "notetext_" + note_counter;
+    let noteTextNode = document.createTextNode(noteTextString);
+    noteTextElement.appendChild(noteTextNode);
+    noteTextElement.appendChild(document.createElement("br"));
+    noteDivElement.appendChild(noteTextElement);
+
+    //edit button
+    let editButtonElement = document.createElement("button");
+    let editButtonText = document.createTextNode("Edit Note");
+    editButtonElement.id = "editbutton_" + note_counter;
+    editButtonElement.appendChild(editButtonText);
+    noteDivElement.appendChild(editButtonElement);
+    noteDivElement.appendChild(document.createTextNode("\u00A0")); //whitespace
+
+    //delete button
+    let deleteButtonElement = document.createElement("button");
+    let deleteButtonText = document.createTextNode("Delete Note");
+    deleteButtonElement.id = "deletebutton_" + note_counter;
+    deleteButtonElement.appendChild(deleteButtonText);
+    noteDivElement.appendChild(deleteButtonElement);
+
+    notesContainer.appendChild(noteDivElement); //append all
+
+    //add delete button listener
+    const deleteNoteObservable = fromEvent(deleteButtonElement, "click");
+    deleteNoteSubscription = deleteNoteObservable.subscribe(deleteNoteObserver);
+
+    const editNoteObservable = fromEvent(editButtonElement, "click");
+    editNoteObservable.subscribe(() => {
+      if (editButtonElement.innerHTML === "Save Changes") {
+        noteTextElement.contentEditable = false;
+        editButtonElement.innerHTML = "Edit Note";
+      } else if (editButtonElement.innerHTML === "Edit Note") {
+        noteTextElement.contentEditable = true;
+        editButtonElement.innerHTML = "Save Changes";
+      }
+    });
+    notesArray.push(noteObj);
+  }
+  // update(noteObj) {
+  //   notesArray.push(noteObj);
+  // }
+  remove(noteObj) {
+    notesArray = notesArray.filter((note) => note !== noteObj);
+  }
+}
+
 let note_counter = 0;
 const noteDisplayArea = document.getElementById("note-display");
 const addNoteForm = document.getElementById("addNoteForm");
@@ -11,53 +75,9 @@ const notesContainer = document.getElementById("notesContainer");
 function addNote(noteTextString, noteColour) {
   hideNoNotesMessage(); //display empty message until a note is added then add layout around
   note_counter++; //increment note id on each addidtion
-
-  //div
-  let noteDivElement = document.createElement("div");
-  noteDivElement.style.backgroundColor = noteColour;
-  noteDivElement.className = "note";
-  noteDivElement.id = "note_" + note_counter; //note number as id to manipulate
-
-  //text
-  let noteTextElement = document.createElement("p");
-  noteTextElement.className = "notetext";
-  noteTextElement.id = "notetext_" + note_counter;
-  let noteTextNode = document.createTextNode(noteTextString);
-  noteTextElement.appendChild(noteTextNode);
-  noteTextElement.appendChild(document.createElement("br"));
-  noteDivElement.appendChild(noteTextElement);
-
-  //edit button
-  let editButtonElement = document.createElement("button");
-  let editButtonText = document.createTextNode("Edit Note");
-  editButtonElement.id = "editbutton_" + note_counter;
-  editButtonElement.appendChild(editButtonText);
-  noteDivElement.appendChild(editButtonElement);
-  noteDivElement.appendChild(document.createTextNode("\u00A0")); //whitespace
-
-  //delete button
-  let deleteButtonElement = document.createElement("button");
-  let deleteButtonText = document.createTextNode("Delete Note");
-  deleteButtonElement.id = "deletebutton_" + note_counter;
-  deleteButtonElement.appendChild(deleteButtonText);
-  noteDivElement.appendChild(deleteButtonElement);
-
-  notesContainer.appendChild(noteDivElement); //append all
-
-  //add delete button listener
-  const deleteNoteObservable = fromEvent(deleteButtonElement, "click");
-  deleteNoteSubscription = deleteNoteObservable.subscribe(deleteNoteObserver);
-
-  const editNoteObservable = fromEvent(editButtonElement, "click");
-  editNoteObservable.subscribe(() => {
-    if (editButtonElement.innerHTML === "Save Changes") {
-      noteTextElement.contentEditable = false;
-      editButtonElement.innerHTML = "Edit Note";
-    } else if (editButtonElement.innerHTML === "Edit Note") {
-      noteTextElement.contentEditable = true;
-      editButtonElement.innerHTML = "Save Changes";
-    }
-  });
+  // id, noteText, parentId, colour;
+  const note = new Note(note_counter, noteTextString, null, noteColour);
+  console.log(note);
 }
 
 function deleteNote(deleteButtonId) {
