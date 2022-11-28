@@ -15,13 +15,13 @@ class Note extends HTMLElement {
     });
 
     const noteDivElement = document.createElement("div");
+    noteDivElement.setAttribute("id", this.getAttribute("id"));
     noteDivElement.style.backgroundColor = this.getAttribute("colour");
     noteDivElement.setAttribute("class", "note");
 
     //text
     const noteTextElement = document.createElement("p");
     noteTextElement.setAttribute("class", "notetext");
-    noteTextElement.setAttribute("id", this.getAttribute("id"));
     const noteTextNode = document.createTextNode(this.getAttribute("noteText"));
     noteTextElement.appendChild(noteTextNode);
     noteTextElement.appendChild(document.createElement("br"));
@@ -44,6 +44,7 @@ class Note extends HTMLElement {
     noteDivElement.appendChild(document.createTextNode("\u00A0")); //whitespace
 
     this.colourChangeSub = new Subject();
+    this.deleteNoteSub = new Subject();
 
     const changeColourButton = document.createElement("button");
     changeColourButton.setAttribute("id", this.getAttribute("id") + "_change");
@@ -60,19 +61,20 @@ class Note extends HTMLElement {
     //delete button
     const deleteButtonElement = document.createElement("button");
     const deleteButtonText = document.createTextNode("Delete Note");
-    // deleteButtonElement.id = "deletebutton_" + note_counter;
     deleteButtonElement.appendChild(deleteButtonText);
+
+    const deleteNoteObservable = fromEvent(deleteButtonElement, "click");
+    deleteNoteObservable.subscribe(() => {
+      deleteNoteDivElement(this.noteDivElement);
+      this.deleteNoteSub.next();
+    });
+
     noteDivElement.appendChild(deleteButtonElement);
     shadow.appendChild(noteDivElement); //append all
     notesContainer.appendChild(shadow);
 
     const newLinked = fromEvent(addRelatedNoteButtonElement, "click");
     newLinked.subscribe(() => this.createLinked(this));
-
-    // add delete button listener
-    const deleteNoteObservable = fromEvent(deleteButtonElement, "click");
-    this.deleteNoteSubscription =
-      deleteNoteObservable.subscribe(deleteNoteObserver);
 
     // const editNoteObservable = fromEvent(editButtonElement, "click");
     // this.editNoteSubscription = editNoteObservable.subscribe(() => {
@@ -103,10 +105,11 @@ class Note extends HTMLElement {
       this.noteDivElement.style.background = colour;
       this.colourChangeSub.next(colour);
     });
+    p.deleteNoteSub.subscribe(() => {
+      deleteNoteDivElement(this.noteDivElement);
+      this.deleteNoteSub.next();
+    });
   }
-  // remove() {
-  //   notesArray = notesArray.filter((note) => note !== noteObj);
-  // }
 }
 
 let note_counter = 0;
@@ -117,17 +120,17 @@ const notesContainer = document.getElementById("notesContainer");
 
 function addNote(noteTextString, noteColour) {
   hideNoNotesMessage(); //display empty message until a note is added then add layout around
-  note_counter++; //increment note id on each addidtion
+  note_counter++; //increment note id on each addition
   const note = new Note(note_counter, noteTextString, noteColour);
 }
 
-// function deleteNote(deleteButtonId) {
-//   document.getElementById(deleteButtonId).parentElement.remove();
-//   note_counter--;
-//   if (note_counter < 1) {
-//     showNoNotesMessage();
-//   }
-// }
+function deleteNoteDivElement(noteDivElement) {
+  noteDivElement.remove();
+  note_counter--;
+  if (note_counter < 1) {
+    showNoNotesMessage();
+  }
+}
 
 function hideNoNotesMessage() {
   //runs when note is added
