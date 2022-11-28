@@ -10,7 +10,7 @@ const notesContainer = document.getElementById("notesContainer");
 //also implements the edit and delete listeners here
 function addNote(noteTextString, noteColour) {
   hideNoNotesMessage(); //display empty message until a note is added then add layout around
-  note_counter++; //incriment note id on each addidtion
+  note_counter++; //increment note id on each addidtion
 
   //div
   let noteDivElement = document.createElement("div");
