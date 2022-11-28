@@ -2,8 +2,12 @@ import { fromEvent } from "rxjs";
 
 let notesArray = [];
 class Note {
-  editNoteObservable;
-  deleteNoteObservable;
+  id;
+  noteText;
+  parentId;
+  colour;
+  editNoteSubscription;
+  deleteNoteSubscription;
 
   constructor(id, noteText, parentId, colour) {
     this.id = id;
@@ -43,12 +47,13 @@ class Note {
 
     notesContainer.appendChild(noteDivElement); //append all
 
-    //add delete button listener
-    // const deleteNoteObservable = fromEvent(deleteButtonElement, "click");
-    // deleteNoteSubscription = deleteNoteObservable.subscribe(deleteNoteObserver);
+    // add delete button listener
+    const deleteNoteObservable = fromEvent(deleteButtonElement, "click");
+    this.deleteNoteSubscription =
+      deleteNoteObservable.subscribe(deleteNoteObserver);
 
-    this.editNoteObservable = fromEvent(editButtonElement, "click");
-    this.editNoteObservable.subscribe(() => {
+    const editNoteObservable = fromEvent(editButtonElement, "click");
+    this.editNoteSubscription = editNoteObservable.subscribe(() => {
       if (editButtonElement.innerHTML === "Save Changes") {
         noteTextElement.contentEditable = false;
         editButtonElement.innerHTML = "Edit Note";
@@ -57,7 +62,7 @@ class Note {
         editButtonElement.innerHTML = "Save Changes";
       }
     });
-    notesArray.push(this);
+    notesArray.push(this); //add to array of notes
   }
   // update(noteObj) {
   //   notesArray.push(noteObj);
