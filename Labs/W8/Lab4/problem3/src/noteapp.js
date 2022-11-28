@@ -30,10 +30,17 @@ class Note {
     noteTextElement.appendChild(document.createElement("br"));
     noteDivElement.appendChild(noteTextElement);
 
+    //add related note button
+    let addRelatedNoteButtonElement = document.createElement("button");
+    let addRelatedNoteButtonText = document.createTextNode("Add Related Note");
+    addRelatedNoteButtonElement.appendChild(addRelatedNoteButtonText);
+    noteDivElement.appendChild(addRelatedNoteButtonElement);
+    noteDivElement.appendChild(document.createTextNode("\u00A0")); //whitespace
+
     //edit button
     let editButtonElement = document.createElement("button");
     let editButtonText = document.createTextNode("Edit Note");
-    editButtonElement.id = "editbutton_" + note_counter;
+    // editButtonElement.id = "editbutton_" + note_counter;
     editButtonElement.appendChild(editButtonText);
     noteDivElement.appendChild(editButtonElement);
     noteDivElement.appendChild(document.createTextNode("\u00A0")); //whitespace
