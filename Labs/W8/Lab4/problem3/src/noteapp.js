@@ -21,7 +21,7 @@ class Note extends HTMLElement {
 
     //text
     const noteTextElement = document.createElement("p");
-    noteTextElement.setAttribute("class", "notetext");
+    noteTextElement.setAttribute("class", "noteText");
     const noteTextNode = document.createTextNode(this.getAttribute("noteText"));
     noteTextElement.appendChild(noteTextNode);
     noteTextElement.appendChild(document.createElement("br"));
