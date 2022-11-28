@@ -2,7 +2,6 @@ import { fromEvent, Subject } from "rxjs";
 
 class Note extends HTMLElement {
   editNoteSubscription;
-  deleteNoteSubscription;
 
   constructor(...args) {
     super();
@@ -76,16 +75,16 @@ class Note extends HTMLElement {
     const newLinked = fromEvent(addRelatedNoteButtonElement, "click");
     newLinked.subscribe(() => this.createLinked(this));
 
-    // const editNoteObservable = fromEvent(editButtonElement, "click");
-    // this.editNoteSubscription = editNoteObservable.subscribe(() => {
-    //   if (editButtonElement.innerHTML === "Save Changes") {
-    //     noteTextElement.contentEditable = false;
-    //     editButtonElement.innerHTML = "Edit Note";
-    //   } else if (editButtonElement.innerHTML === "Edit Note") {
-    //     noteTextElement.contentEditable = true;
-    //     editButtonElement.innerHTML = "Save Changes";
-    //   }
-    // });
+    const editNoteObservable = fromEvent(editButtonElement, "click");
+    this.editNoteSubscription = editNoteObservable.subscribe(() => {
+      if (editButtonElement.innerHTML === "Save Changes") {
+        noteTextElement.contentEditable = false;
+        editButtonElement.innerHTML = "Edit Note";
+      } else if (editButtonElement.innerHTML === "Edit Note") {
+        noteTextElement.contentEditable = true;
+        editButtonElement.innerHTML = "Save Changes";
+      }
+    });
   }
   createLinked(parent) {
     console.log(parent.getAttribute("colour"));
