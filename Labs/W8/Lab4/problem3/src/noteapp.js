@@ -1,4 +1,4 @@
-import { fromEvent } from "rxjs";
+import { fromEvent, Subject } from "rxjs";
 
 class Note extends HTMLElement {
   editNoteSubscription;
@@ -9,7 +9,6 @@ class Note extends HTMLElement {
     this.setAttribute("id", args[0]);
     this.setAttribute("noteText", args[1]);
     this.setAttribute("colour", args[2]);
-    this.setAttribute("children", args[3]);
 
     const shadow = this.attachShadow({
       mode: "open",
@@ -27,6 +26,7 @@ class Note extends HTMLElement {
     noteTextElement.appendChild(noteTextNode);
     noteTextElement.appendChild(document.createElement("br"));
     noteDivElement.appendChild(noteTextElement);
+    this.noteDivElement = noteDivElement;
 
     //add related note button
     let addRelatedNoteButtonElement = document.createElement("button");
@@ -42,15 +42,35 @@ class Note extends HTMLElement {
     noteDivElement.appendChild(editButtonElement);
     noteDivElement.appendChild(document.createTextNode("\u00A0")); //whitespace
 
+    this.sub = new Subject();
+
+    const changeColourButton = document.createElement("button");
+    changeColourButton.setAttribute("id", this.getAttribute("id") + "_change");
+    changeColourButton.innerHTML = "Change Colour";
+    const changeColourButtonObserver = fromEvent(changeColourButton, "click");
+    changeColourButtonObserver.subscribe(() => {
+      let newColour = new FormData(addNoteForm).get("colours");
+      noteDivElement.style.background = newColour;
+      this.sub.next(newColour);
+    });
+    noteDivElement.appendChild(changeColourButton);
+
     //delete button
     let deleteButtonElement = document.createElement("button");
     let deleteButtonText = document.createTextNode("Delete Note");
     // deleteButtonElement.id = "deletebutton_" + note_counter;
     deleteButtonElement.appendChild(deleteButtonText);
     noteDivElement.appendChild(deleteButtonElement);
-
     shadow.appendChild(noteDivElement); //append all
     notesContainer.appendChild(shadow);
+
+    // addRelatedNoteButtonElement.setAttribute(
+    //   "id",
+    //   this.getAttribute("id") + "_button"
+    // );
+    // addRelatedNoteButtonElement.innerHTML = "Create Linked";
+    const newLinked = fromEvent(addRelatedNoteButtonElement, "click");
+    newLinked.subscribe(() => this.createLinked(this));
 
     // add delete button listener
     // const deleteNoteObservable = fromEvent(deleteButtonElement, "click");
@@ -68,15 +88,30 @@ class Note extends HTMLElement {
     //   }
     // });
   }
-  add() {
-    notesArray.push(this); //add to array of notes
+  createLinked(parent) {
+    let formInput = new FormData(addNoteForm);
+    let childNote = new Note(
+      note_counter,
+      formInput.get("note"),
+      parent.getAttribute("colour")
+    );
+    childNote.setAttribute("id", parent + "_" + this.getAttribute("children"));
+    this.setAttribute("children", parseInt(this.getAttribute("children")) + 1);
+    childNote.link(this);
+  }
+  link(p) {
+    this.setAttribute("parent", p.id);
+    p.sub.subscribe((colour) => {
+      this.noteDivElement.style.background = colour;
+      this.sub.next(colour);
+    });
   }
   // update(noteObj) {
   //   notesArray.push(noteObj);
   // }
-  remove() {
-    notesArray = notesArray.filter((note) => note !== noteObj);
-  }
+  // remove() {
+  //   notesArray = notesArray.filter((note) => note !== noteObj);
+  // }
 }
 
 let note_counter = 0;
@@ -85,12 +120,10 @@ const noNotesMessage = document.getElementById("noNotesMessage");
 const notesHeader = document.getElementById("notesHeader");
 const notesContainer = document.getElementById("notesContainer");
 
-//also implements the edit and delete listeners here
 function addNote(noteTextString, noteColour) {
   hideNoNotesMessage(); //display empty message until a note is added then add layout around
   note_counter++; //increment note id on each addidtion
-  const note = new Note(note_counter, noteTextString, noteColour, null);
-  // note.add();
+  const note = new Note(note_counter, noteTextString, noteColour);
 }
 
 // function deleteNote(deleteButtonId) {
