@@ -80,7 +80,6 @@ class Note {
 }
 
 let note_counter = 0;
-const noteDisplayArea = document.getElementById("note-display");
 const addNoteForm = document.getElementById("addNoteForm");
 const noNotesMessage = document.getElementById("noNotesMessage");
 const notesHeader = document.getElementById("notesHeader");
