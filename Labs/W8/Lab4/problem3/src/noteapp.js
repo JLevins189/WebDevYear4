@@ -162,6 +162,7 @@ const addNoteObserver = {
   },
 };
 
+//ADD ROOT NOTE
 const addNoteObservable = fromEvent(addNoteForm, "submit");
 addNoteObservable.subscribe(addNoteObserver);
 customElements.define("note-el", Note);
