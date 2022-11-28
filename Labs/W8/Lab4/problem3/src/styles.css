@@ -3,7 +3,8 @@
 }
 
 .note  {
-    width: 20%;
+    width: auto;
+    max-width: 30%;
     word-wrap: break-word;
     margin-top:1em;
     margin-right: 1%;
