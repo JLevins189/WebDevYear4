@@ -12,7 +12,6 @@ class Note extends HTMLElement {
     const shadow = this.attachShadow({
       mode: "open",
     });
-
     const noteDivElement = document.createElement("div");
     noteDivElement.setAttribute("id", this.getAttribute("id"));
     noteDivElement.style.backgroundColor = this.getAttribute("colour");
@@ -89,12 +88,20 @@ class Note extends HTMLElement {
   createLinked(parent) {
     const formInput = new FormData(addNoteForm);
     const childNote = new Note(
-      note_counter,
+      ++note_counter,
       formInput.get("note"),
       parent.getAttribute("colour")
     );
-    childNote.setAttribute("id", parent + "_" + this.getAttribute("children"));
-    this.setAttribute("children", parseInt(this.getAttribute("children")) + 1);
+
+    // childNote.setAttribute(
+    //   "id",
+    //   parent.id + "_" + this.getAttribute("children")
+    // );
+    console.log(childNote);
+    parent.setAttribute(
+      "children",
+      parseInt(parent.getAttribute("children")) + 1 || 1
+    );
     childNote.link(this);
   }
   link(p) {
