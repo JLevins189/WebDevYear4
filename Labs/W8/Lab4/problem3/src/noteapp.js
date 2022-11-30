@@ -73,16 +73,16 @@ class Note extends HTMLElement {
     if (args.length > 3) {
       const parentElement = args[3];
       if (parentElement.children.length > 0) {
-        console.log(
-          parentElement.children[parentElement.children.length - 1]
-            .noteDivElement
-        );
+        //2nd or later child - attach after final child
+        parentElement.children[
+          parentElement.children.length - 1
+        ].noteDivElement.after(shadow);
       } else {
-        //first child
+        //first child - attach after parent
         parentElement.noteDivElement.after(shadow);
       }
-      // args[3].noteDivElement.after(shadow);
     } else {
+      //parent
       notesContainer.appendChild(shadow);
     }
 
