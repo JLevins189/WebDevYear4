@@ -148,20 +148,11 @@ function showNoNotesMessage() {
 }
 
 //ADD ROOT NOTE
-const addNoteObserver = {
-  next: function (e) {
-    e.preventDefault();
-    let formInput = new FormData(addNoteForm);
-    addRootNote(formInput.get("note"), formInput.get("colours"));
-  },
-  error: function (err) {
-    console.error(err);
-  },
-  complete: function () {
-    console.log("Completed");
-  },
-};
-
 const addNoteObservable = fromEvent(addNoteForm, "submit");
-addNoteObservable.subscribe(addNoteObserver);
+addNoteObservable.subscribe((e) => {
+  e.preventDefault();
+  let formInput = new FormData(addNoteForm);
+  addRootNote(formInput.get("note"), formInput.get("colours"));
+});
+
 customElements.define("note-el", Note);
