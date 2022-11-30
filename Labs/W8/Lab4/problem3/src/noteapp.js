@@ -2,7 +2,7 @@ import { fromEvent, Subject } from "rxjs";
 
 class Note extends HTMLElement {
   editNoteSubscription;
-  children;
+  children = [];
 
   constructor(...args) {
     super();
@@ -71,8 +71,17 @@ class Note extends HTMLElement {
     noteDivElement.appendChild(deleteButtonElement);
     shadow.appendChild(noteDivElement); //append all
     if (args.length > 3) {
-      console.log(Object.keys(args[3]));
-      args[3].noteDivElement.after(shadow);
+      const parentElement = args[3];
+      if (parentElement.children.length > 0) {
+        console.log(
+          parentElement.children[parentElement.children.length - 1]
+            .noteDivElement
+        );
+      } else {
+        //first child
+        parentElement.noteDivElement.after(shadow);
+      }
+      // args[3].noteDivElement.after(shadow);
     } else {
       notesContainer.appendChild(shadow);
     }
@@ -104,6 +113,7 @@ class Note extends HTMLElement {
       parseInt(parent.getAttribute("children")) + 1 || 1
     );
     childNote.link(this);
+    parent.children.push(childNote);
   }
   link(p) {
     this.setAttribute("parentId", p.id);
