@@ -32,6 +32,8 @@ class Note extends HTMLElement {
     const addRelatedNoteButtonText =
       document.createTextNode("Add Related Note");
     addRelatedNoteButtonElement.appendChild(addRelatedNoteButtonText);
+    noteDivElement.appendChild(document.createTextNode("\u00A0")); //whitespace
+
     noteDivElement.appendChild(addRelatedNoteButtonElement);
     noteDivElement.appendChild(document.createTextNode("\u00A0")); //whitespace
 
@@ -56,6 +58,7 @@ class Note extends HTMLElement {
       this.colourChangeSub.next(newColour);
     });
     noteDivElement.appendChild(changeColourButton);
+    noteDivElement.appendChild(document.createTextNode("\u00A0")); //whitespace
 
     //delete button
     const deleteButtonElement = document.createElement("button");
@@ -67,9 +70,12 @@ class Note extends HTMLElement {
       deleteNoteDivElement(this.noteDivElement);
       this.deleteNoteSub.next();
     });
-
     noteDivElement.appendChild(deleteButtonElement);
+    noteDivElement.appendChild(document.createTextNode("\u00A0")); //whitespace
+
     shadow.appendChild(noteDivElement); //append all
+
+    //if parent specified
     if (args.length > 3) {
       const parentElement = args[3];
       if (parentElement.children.length > 0) {

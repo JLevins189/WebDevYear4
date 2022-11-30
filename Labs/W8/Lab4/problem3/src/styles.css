@@ -1,10 +1,10 @@
 .noteText {
-    margin-top:0.75em;
+    margin: 0.5rem;
 }
 
 .note  {
-    width: auto;
-    max-width: 30%;
+    width: 30%;
+    min-height: 3rem;
     word-wrap: break-word;
     margin-top:1em;
     margin-right: 1%;
@@ -12,6 +12,10 @@
     text-align: center;
     flex-grow: 0.25;
     text-align: center;
+    display: inline-block;
+}
+#addNoteForm,h1, #noNotesMessage {
+    margin-left: 0.5rem;
 }
 
 .notesContainer  {
@@ -29,10 +33,10 @@ select {
 }
 
 p {
-    display: inline;
     text-overflow: clip;
 }
 
 button  {
-    margin-top:0.75em;
+    margin:0.25em 0;
+    margin-top: auto
 }
