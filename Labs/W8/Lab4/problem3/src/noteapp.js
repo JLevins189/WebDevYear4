@@ -87,7 +87,6 @@ class Note extends HTMLElement {
     });
   }
   createLinked(parent) {
-    console.log(parent.getAttribute("colour"));
     const formInput = new FormData(addNoteForm);
     const childNote = new Note(
       note_counter,
