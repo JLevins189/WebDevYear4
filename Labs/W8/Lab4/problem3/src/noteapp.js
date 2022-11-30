@@ -92,12 +92,6 @@ class Note extends HTMLElement {
       formInput.get("note"),
       parent.getAttribute("colour")
     );
-
-    // childNote.setAttribute(
-    //   "id",
-    //   parent.id + "_" + this.getAttribute("children")
-    // );
-    console.log(childNote);
     parent.setAttribute(
       "children",
       parseInt(parent.getAttribute("children")) + 1 || 1
@@ -105,7 +99,7 @@ class Note extends HTMLElement {
     childNote.link(this);
   }
   link(p) {
-    this.setAttribute("parent", p.id);
+    this.setAttribute("parentId", p.id);
     p.colourChangeSub.subscribe((colour) => {
       this.noteDivElement.style.background = colour;
       this.colourChangeSub.next(colour);
