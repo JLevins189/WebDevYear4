@@ -2,6 +2,7 @@ import { fromEvent, Subject } from "rxjs";
 
 class Note extends HTMLElement {
   editNoteSubscription;
+  children;
 
   constructor(...args) {
     super();
@@ -69,7 +70,12 @@ class Note extends HTMLElement {
 
     noteDivElement.appendChild(deleteButtonElement);
     shadow.appendChild(noteDivElement); //append all
-    notesContainer.appendChild(shadow);
+    if (args.length > 3) {
+      console.log(Object.keys(args[3]));
+      args[3].noteDivElement.after(shadow);
+    } else {
+      notesContainer.appendChild(shadow);
+    }
 
     const newLinked = fromEvent(addRelatedNoteButtonElement, "click");
     newLinked.subscribe(() => this.createLinked(this));
@@ -90,7 +96,8 @@ class Note extends HTMLElement {
     const childNote = new Note(
       ++note_counter,
       formInput.get("note"),
-      parent.getAttribute("colour")
+      parent.getAttribute("colour"),
+      parent
     );
     parent.setAttribute(
       "children",
