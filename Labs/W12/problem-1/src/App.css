@@ -1,4 +1,3 @@
-
 .noteText {
     margin: 0.5rem;
 }
@@ -15,7 +14,7 @@
     text-align: center;
     display: inline-block;
 }
-#addNoteForm,h1, #noNotesMessage {
+#addNoteForm, h1, #notesList {
     margin-left: 0.5rem;
 }
 
