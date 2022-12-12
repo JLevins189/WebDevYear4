@@ -11,6 +11,7 @@ function AddNoteForm(props) {
         type="text"
         value={noteText}
         onChange={(e) => setNoteText(e.target.value)}
+        required
       />
       <br />
 
