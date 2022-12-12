@@ -16,7 +16,12 @@ function AddNoteForm(props) {
 
       <label for="colours">Note Colour:</label>
       <br />
-      <select name="colours" id="colour-selctor">
+      <select
+        name="colours"
+        id="colour-selctor"
+        value={noteColour}
+        onChange={(e) => setNoteColour(e.target.value)}
+      >
         <option value="white">White</option>
         <option value="aqua">Aqua</option>
         <option value="yellowgreen">Green</option>
