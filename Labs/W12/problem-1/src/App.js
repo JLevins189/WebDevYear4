@@ -14,7 +14,11 @@ function App() {
 
   return (
     <div className="App">
-      <AddNoteForm handleSubmit={handleAddNote} />
+      <AddNoteForm
+        handleSubmit={handleAddNote}
+        noteText={{ noteText, setNoteText }}
+        noteColour={{ noteColour, setNoteColour }}
+      />
     </div>
   );
 }

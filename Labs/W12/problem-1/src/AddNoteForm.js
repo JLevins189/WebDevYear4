@@ -1,9 +1,17 @@
 function AddNoteForm(props) {
+  console.log(props);
+  const { noteText, setNoteText } = props.noteText;
+  const { noteColour, setNoteColour } = props.noteColour;
+
   return (
     <form id="addNoteForm" onSubmit={props.handleSubmit}>
       <label for="note">Note Text:</label>
       <br />
-      <input type="text" />
+      <input
+        type="text"
+        value={noteText}
+        onChange={(e) => setNoteText(e.target.value)}
+      />
       <br />
 
       <label for="colours">Note Colour:</label>
