@@ -2,7 +2,8 @@ function EmptyList(props) {
   const { heading, text } = props;
   return (
     <>
-      <h2>{heading || "No Data Yet.."}</h2>
+      <h4>{heading || "No Data Yet.."}</h4>
+      <p>{text || "Data will appear here when it is added"}</p>
     </>
   );
 }
