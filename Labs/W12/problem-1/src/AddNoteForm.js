@@ -20,7 +20,7 @@ function AddNoteForm(props) {
         name="colours"
         id="colour-selctor"
         value={noteColour}
-        onChange={(e) => setNoteColour(e.target.value)}
+        onChange={(e) => setNoteColour((prev) => e.target.value)}
       >
         <option value="white">White</option>
         <option value="aqua">Aqua</option>

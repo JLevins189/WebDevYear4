@@ -1,7 +1,9 @@
 function NoteListElement(props) {
+  const { noteText, noteColour } = props;
+  console.log(props);
   return (
-    <div className="note" style={{ backgroundColor: "red" }}>
-      <p className="notetext"></p>
+    <div className="note" style={{ backgroundColor: noteColour }}>
+      <p className="notetext">{noteText}</p>
       <br />
       <button>Edit Note</button> &nbsp;
       <button>Delete Note</button> &nbsp;

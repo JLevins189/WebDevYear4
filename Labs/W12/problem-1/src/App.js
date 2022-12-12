@@ -4,13 +4,15 @@ import "./App.css";
 import NoteList from "./NoteList";
 
 function App() {
+  const [noteCounter, setNoteCounter] = useState(1);
   const [noteText, setNoteText] = useState("");
   const [noteColour, setNoteColour] = useState("white");
   const [notes, setNotes] = useState([]);
 
   const handleAddNote = (e) => {
     e.preventDefault();
-    setNotes((prev) => [...prev, { noteText, noteColour }]);
+    setNotes((prev) => [...prev, { id: noteCounter, noteText, noteColour }]);
+    setNoteCounter((prev) => prev + 1);
   };
 
   return (
