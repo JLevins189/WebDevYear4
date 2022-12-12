@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AddNoteForm from "./AddNoteForm";
 import "./App.css";
+import NoteList from "./NoteList";
 
 function App() {
   const [noteText, setNoteText] = useState("");
@@ -19,6 +20,7 @@ function App() {
         noteText={{ noteText, setNoteText }}
         noteColour={{ noteColour, setNoteColour }}
       />
+      <NoteList notes={notes} />
     </div>
   );
 }
