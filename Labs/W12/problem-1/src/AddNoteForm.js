@@ -1,5 +1,4 @@
 function AddNoteForm(props) {
-  console.log(props);
   const { noteText, setNoteText } = props.noteText;
   const { noteColour, setNoteColour } = props.noteColour;
 
