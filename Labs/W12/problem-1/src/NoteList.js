@@ -2,7 +2,14 @@ import EmptyList from "./EmptyList";
 import NoteListElement from "./NoteListElement";
 
 function NoteList(props) {
-  const { notes } = props;
+  const { notes, setNotes } = props.notes;
+
+  const handleDeleteNote = (id) => {
+    const filteredArray = notes.filter((note) => {
+      return note.id !== id;
+    });
+    setNotes(filteredArray);
+  };
 
   return (
     <div id="notesList">
@@ -12,6 +19,8 @@ function NoteList(props) {
             noteText={note.noteText}
             noteColour={note.noteColour}
             key={note.id}
+            id={note.id}
+            handleDeleteNote={handleDeleteNote}
           />
         ))
       ) : (

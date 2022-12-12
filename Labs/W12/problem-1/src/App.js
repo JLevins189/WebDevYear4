@@ -22,7 +22,7 @@ function App() {
         noteText={{ noteText, setNoteText }}
         noteColour={{ noteColour, setNoteColour }}
       />
-      <NoteList notes={notes} />
+      <NoteList notes={{ notes, setNotes }} />
     </div>
   );
 }
