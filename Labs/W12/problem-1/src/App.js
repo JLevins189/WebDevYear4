@@ -9,7 +9,7 @@ function App() {
 
   const handleAddNote = (e) => {
     e.preventDefault();
-    console.log(1);
+    setNotes((prev) => [...prev, { noteText, noteColour }]);
   };
 
   return (
@@ -22,5 +22,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
