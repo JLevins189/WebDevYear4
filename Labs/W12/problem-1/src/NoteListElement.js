@@ -1,6 +1,5 @@
 function NoteListElement(props) {
   const { noteText, noteColour } = props;
-  console.log(props);
   return (
     <div className="note" style={{ backgroundColor: noteColour }}>
       <p className="notetext">{noteText}</p>
