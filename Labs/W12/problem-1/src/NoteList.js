@@ -5,10 +5,11 @@ function NoteList(props) {
   const { notes, setNotes } = props.notes;
 
   const handleDeleteNote = (id) => {
-    const filteredArray = notes.filter((note) => {
-      return note.id !== id;
-    });
-    setNotes(filteredArray);
+    setNotes((prev) =>
+      prev.filter((note) => {
+        return note.id !== id;
+      })
+    );
   };
 
   return (
