@@ -25,10 +25,12 @@ function NoteList(props) {
           />
         ))
       ) : (
-        <EmptyList />
+        <EmptyList
+          heading="No Notes yet"
+          text="Notes will be available when they are added"
+        />
       )}
     </div>
   );
 }
-
 export default NoteList;
