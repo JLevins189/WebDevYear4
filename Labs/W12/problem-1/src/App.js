@@ -5,13 +5,11 @@ import "./App.css";
 function App() {
   const [noteText, setNoteText] = useState("");
   const [noteColour, setNoteColour] = useState("white");
-  const [errorMessage, setErrorMessage] = useState({});
+  const [notes, setNotes] = useState([]);
 
   const handleAddNote = (e) => {
     e.preventDefault();
-    if (errorMessage.noteText === null) {
-      console.log("Test");
-    }
+    console.log(1);
   };
 
   return (
@@ -20,7 +18,6 @@ function App() {
         handleSubmit={handleAddNote}
         noteText={{ noteText, setNoteText }}
         noteColour={{ noteColour, setNoteColour }}
-        errorMessage={{ errorMessage, setErrorMessage }}
       />
     </div>
   );
