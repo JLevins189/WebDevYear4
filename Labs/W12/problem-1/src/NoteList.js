@@ -22,6 +22,7 @@ function NoteList(props) {
             key={note.id}
             id={note.id}
             handleDeleteNote={handleDeleteNote}
+            notes={{ notes, setNotes }}
           />
         ))
       ) : (
