@@ -1,9 +1,9 @@
-function AddNoteForm() {
+function AddNoteForm(props) {
   return (
-    <form id="addNoteForm">
+    <form id="addNoteForm" onSubmit={props.handleSubmit}>
       <label for="note">Note Text:</label>
       <br />
-      <input type="text" id="note" name="note" />
+      <input type="text" />
       <br />
 
       <label for="colours">Note Colour:</label>
@@ -18,7 +18,7 @@ function AddNoteForm() {
       </select>
       <br />
 
-      <input type="submit" id="addNoteButton" value="Add Note" />
+      <input type="submit" value="Add Note" />
     </form>
   );
 }
