@@ -26,7 +26,10 @@ function NoteListElement(props) {
         {noteText}
       </p>
       <br />
-      <button onClick={toggleEditing}>Edit Note</button> &nbsp;
+      <button onClick={toggleEditing}>
+        {!editing ? "Edit Note" : "Save Changes"}
+      </button>{" "}
+      &nbsp;
       <button onClick={() => handleDeleteNote(id)}>Delete Note</button> &nbsp;
     </div>
   );
