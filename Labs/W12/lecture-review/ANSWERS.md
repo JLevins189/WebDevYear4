@@ -77,35 +77,35 @@ Mapping over said data object will always produce a functor of the same size.
 
 ---
 
-### Promises
+## Promises
 
-- #### Advantages:
+- #### Advantage:
 
-  - 1
+  - Can be chained together working in the same way as nested callbacks but in a much cleaner way to read and debug.
 
-- #### Disadvantages:
+- #### Disadvantage:
 
-  - 1
+  - Can not handle data sources that provide more than one value, such as mouse movements,
 
-### Callbacks
+## Callbacks
 
-- #### Advantages:
+- #### Advantage:
 
-  - 1
+  - They are higher order functions and can access the scope they are called from as well as their own scope.
 
-- #### Disadvantages:
+- #### Disadvantage:
 
-  - 1
+  - If a callback needs to be made using the result of another, they become nested. If this occur a few times they become overly nested and creates what is often referred to as "callback hell" which is overly nested callbacks
 
-### Streams
+## Streams
 
-- #### Advantages:
+- #### Advantage:
 
-  - 1
+  - Streams can access data as it is delivered. Streams do not need to wait for the full data to be loaded
 
-- #### Disadvantages:
+- #### Disadvantage:
 
-  - 1
+  - Often overkill for simple interactions and provides minimal benefit in these cases for extra difficulty in implementation.
 
 ---
 
@@ -146,7 +146,8 @@ Code Example:
 ![Diagram of CSS Box Model being used for spacing](https://ishadeed.com/assets/spacing-css/spacing-1.png)
 Diagram showing padding and margin being used to space elements.
 
-To space elements, we can use margins between elements to space them apart by specific values. To create inner space within an element inside its border we can use padding, this can be useful for things like search boxes to enlarge the element by creating space within its own border.
+To space elements, we can use margins between elements to space them apart by specific values. To create inner space within an element inside its border we can use padding,
+this can be useful for things like search boxes to enlarge the element by creating space within its own border.
 Borders can be used to create a buffer between the element's inner and outer space to create more space between elements.
 In the diagram above, we see how padding "inner space" is used to create a bigger element causing more space between the content of both elements. We also see margin "outer space" is used to create white-space between the 2 elements.
 
