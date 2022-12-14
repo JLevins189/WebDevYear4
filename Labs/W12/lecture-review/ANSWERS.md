@@ -149,3 +149,25 @@ Diagram showing padding and margin being used to space elements.
 To space elements, we can use margins between elements to space them apart by specific values. To create inner space within an element inside its border we can use padding, this can be useful for things like search boxes to enlarge the element by creating space within its own border.
 Borders can be used to create a buffer between the element's inner and outer space to create more space between elements.
 In the diagram above, we see how padding "inner space" is used to create a bigger element causing more space between the content of both elements. We also see margin "outer space" is used to create white-space between the 2 elements.
+
+---
+
+## Q5.
+
+---
+
+1. The user navigates to the initial URL in the browser. The browser makes a DNS request to find the server IP address mapped to the URL. The DNS Server returns the IP address to the browser.
+2. The browser makes a TCP/IP connection to returned server IP address and
+   designated port associated with that URL. The protocol will inform the browser of the location of the files required by the browser.
+3. An application server or HTTP proxy, listening at the server IP address, accepts
+   the connection from the browser.
+4. The browser sends a HTTP request over the, now open, TCP/IP connection
+5. The application server parses the request and responds to the browser
+   over the same open TCP/IP connection, delivering the files needed.
+6. These files will contain the intial assets required to open the webpage (HTML, CSS, JS, Multimedia)
+
+7. As these assets load, the browser parses them and runs and commands contained within.
+
+   - Examples include styling from the fetched CSS file being applied to the fetched HTML file or fetches required on load by JS or fetch external assets like JavaScript libraries.
+
+8. This process continues until the last asset has been fetched.
