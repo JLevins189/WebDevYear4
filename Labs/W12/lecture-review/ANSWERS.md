@@ -61,3 +61,18 @@ notes.map((note) => (
 ## Q2.
 
 ---
+
+A functor is a data object that can hold elements of any data type which implements the map operation (a function)
+Mapping over said data object will always produce a functor of the same size.
+
+- Example:
+
+```javascript
+["test", "test123", "test1"].map((str) => str.length).map((num) => num / 10); // -> [0.4, 0.7, 0.5]
+```
+
+---
+
+## Q3.
+
+---
